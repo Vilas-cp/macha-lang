@@ -1,5 +1,11 @@
 idu a = 10;
 idu b = 20;
-irlli c = a + b;
+idu e = 50;
+idu sum = 1;
+allivaragu (idu i = 1; i < 10; i++) {
+    sum = sum * i;
+}
+irlli c = a + b + e;
 
 macha.helu("Answer is " + c);
+macha.helu("Answer is " + sum);

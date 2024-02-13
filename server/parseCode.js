@@ -5,7 +5,7 @@ const exec = util.promisify(require("node:child_process").exec);
 
 async function parseMachaLangCode(code) {
   if (typeof code === "string") {
-    const spiltArray = code.split(";");
+    const spiltArray = code.split(";\n");
     const spiltArray1 = [];
     const spiltArray2 = [];
     for (let index = 0; index < spiltArray.length; index++) {
@@ -19,7 +19,12 @@ async function parseMachaLangCode(code) {
     }
     for (let index = 0; index < spiltArray1.length; index++) {
       let element = spiltArray1[index];
-      if (element.match("idu") !== null) {
+
+      if (element.match("allivaragu") !== null) {
+        // console.log(element);
+        element = element.replace("allivaragu", "for");
+        element = element.replace("idu", "let");
+      } else if (element.match("idu") !== null) {
         element = element.replace("idu", "let") + ";";
       } else if (element.match("irlli") !== null) {
         element = element.replace("irlli", "const") + ";";
@@ -28,7 +33,7 @@ async function parseMachaLangCode(code) {
       }
       spiltArray2.push(element);
     }
-    const resultString = spiltArray2.join("\n");
+    const resultString = spiltArray2.join("");
     const outputString = "";
     writeBuildFile(resultString);
     // console.log("Hello");
@@ -45,7 +50,7 @@ async function parseMachaLangCode(code) {
 }
 
 function writeBuildFile(code) {
-  const result = fs.writeFileSync("./build.js", code);
+  const result = fs.writeFileSync("./build/build.js", code);
 }
 
 module.exports = { parseMachaLangCode };

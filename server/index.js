@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const { z } = require("zod");
 const fs = require("fs");
+const util = require("util");
 const { parseMachaLangCode } = require("./parseCode");
-const { spawn, exec } = require("child_process");
-const { error } = require("console");
-const { stderr } = require("process");
+const { spawn } = require("child_process");
+const exec = util.promisify(require("child_process").exec);
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -32,14 +32,17 @@ app.post("/code/macha/v1", async (req, res) => {
     const result = await parseMachaLangCode(code.code);
     // const ls = await spawn("node", ["build.js"]);
     // ls.stdout.on("data", (data) => {console.log(data)});
-    await exec("node ./build.js", (err,std,stder) => {
-      console.log(err);
-      console.log(std);
-      console.log(stderr);
-    })
-    some();
+    async function lsExample() {
+      const { stdout, stderr } = await exec("node ./build/build.js");
+      // console.log("stdout:", stdout);
+      // console.error("stderr:", stderr);
+      return stdout;
+    }
+    const sendResult = await lsExample();
+    // some();
     res.status(201);
-    res.send({ result });
+    console.log(sendResult);
+    res.send({ result: sendResult });
   } catch (error) {
     console.log(error);
     res.status(401);
@@ -48,11 +51,11 @@ app.post("/code/macha/v1", async (req, res) => {
 });
 
 function some() {
-exec("node build.js", (err,std,stder) => {
-  console.log(std);
-})
+  exec("node build.js", (err, std, stder) => {
+    console.log(std);
+  });
 }
-some();
+// some();
 
 app.listen(port, () => {
   console.log(`Server listening to port ${port}!!`);
