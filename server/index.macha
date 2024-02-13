@@ -1,0 +1,5 @@
+idu a = 10;
+idu b = 20;
+irlli c = a + b;
+
+macha.helu("Answer is" + c);
