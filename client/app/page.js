@@ -1,10 +1,13 @@
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+
 
 
 export default function Home() {
   return (
     <div>
-      Jai sri ram
-
+      <Header/>
+      <Hero/>
     </div>
   );
 }
