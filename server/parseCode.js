@@ -15,14 +15,12 @@ async function parseMachaLangCode(code) {
       }
       element = element.replace(/\n/g, "");
       spiltArray1.push(element);
-      //   console.log(element);
     }
     for (let index = 0; index < spiltArray1.length; index++) {
       let element = spiltArray1[index];
-      console.log(element);
+      // console.log(element);
 
       if (element.match("allivaragu") !== null) {
-        // console.log(element);
         element = element.replace("allivaragu", "for");
         element = element.replace("idu", "let");
       } if (element.match("idu") !== null) {
@@ -41,15 +39,6 @@ async function parseMachaLangCode(code) {
     const resultString = spiltArray2.join("");
     const outputString = "";
     writeBuildFile(resultString);
-    // console.log("Hello");
-    // const { stdout, stderr } = await exec('node build.js');
-    // console.log("Hello");
-    // console.log(stdout);
-    // console.log(stderr);
-
-    // console.log(spiltArray2);
-    // console.log(spiltArray1);
-    // console.log(spiltArray);
     return resultString;
   }
 }

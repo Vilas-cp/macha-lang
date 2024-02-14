@@ -1,10 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const { z } = require("zod");
-const fs = require("fs");
 const util = require("util");
 const { parseMachaLangCode } = require("./parseCode");
-const { spawn } = require("child_process");
 const exec = util.promisify(require("child_process").exec);
 const app = express();
 const port = process.env.PORT || 8080;
@@ -16,8 +14,10 @@ app.use(cors());
 
 app.get("/home", (req, res) => {
   try {
+    res.status(200);
     res.send("Hello World!!");
   } catch (error) {
+    res.status(500);
     console.log(error);
   }
 });
@@ -30,16 +30,11 @@ app.post("/code/macha/v1", async (req, res) => {
     // };
 
     const result = await parseMachaLangCode(code.code);
-    // const ls = await spawn("node", ["build.js"]);
-    // ls.stdout.on("data", (data) => {console.log(data)});
     async function lsExample() {
       const { stdout, stderr } = await exec("node ./build/build.js");
-      // console.log("stdout:", stdout);
-      // console.error("stderr:", stderr);
       return stdout;
     }
     const sendResult = await lsExample();
-    // some();
     res.status(201);
     console.log(sendResult);
     res.send({ result: sendResult });
@@ -49,13 +44,6 @@ app.post("/code/macha/v1", async (req, res) => {
     res.send(error);
   }
 });
-
-function some() {
-  exec("node build.js", (err, std, stder) => {
-    console.log(std);
-  });
-}
-// some();
 
 app.listen(port, () => {
   console.log(`Server listening to port ${port}!!`);
