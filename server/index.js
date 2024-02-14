@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
 const { z } = require("zod");
-const util = require("util");
 const { parseMachaLangCode } = require("./parseCode");
-const exec = util.promisify(require("child_process").exec);
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -24,23 +23,24 @@ app.get("/home", (req, res) => {
 
 app.post("/code/macha/v1", async (req, res) => {
   try {
-    const code = codeSchema.parse(req.body);
-    // const code = {
-    //   code: fs.readFileSync("./index.macha", { encoding: "utf8" }).toString(),
-    // };
+    let code;
+
+    if (req.body.code) {
+      code = codeSchema.parse(req.body);
+    } else {
+      code = {
+        code: fs.readFileSync("./index.macha", { encoding: "utf8" }).toString(),
+      };
+    }
 
     const result = await parseMachaLangCode(code.code);
-    async function lsExample() {
-      const { stdout, stderr } = await exec("node ./build/build.js");
-      return stdout;
-    }
-    const sendResult = await lsExample();
-    res.status(201);
-    console.log(sendResult);
-    res.send({ result: sendResult });
+
+    res.status(200);
+    // console.log(result);
+    res.send({ result });
   } catch (error) {
     console.log(error);
-    res.status(401);
+    res.status(500);
     res.send(error);
   }
 });
