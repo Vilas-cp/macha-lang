@@ -14,6 +14,7 @@ import React, { useRef, useState } from "react";
 import Langselector from "./Langselector";
 import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
+import { executecode } from "../api";
 
 function Codeeditor() {
   const editorRef = useRef();
@@ -68,7 +69,7 @@ function Codeeditor() {
           Machalang compiler
         </Text>
       </div>
-      <HStack>
+      <HStack gap={0}>
         <Box w="50%" mt={4} ml={-30}>
           <div className="block">
             <Langselector language={language} onSelect={onSelect} />
