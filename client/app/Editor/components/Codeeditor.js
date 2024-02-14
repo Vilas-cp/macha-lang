@@ -45,7 +45,8 @@ function Codeeditor() {
         status: "error",
         duration: 6000,
       });
-      console.error(error);
+      setOutput(error.message);
+      // console.error(error);
     } finally {
       setisloading(false);
     }
@@ -67,7 +68,7 @@ function Codeeditor() {
         <img src="macha.jpg" height={80} width={80} />
 
         <Text mb={2} fontSize="40px" marginTop={10} fontWeight="bold">
-          Machalang compiler
+        ಮಚ್ಚ Lang compiler
         </Text>
       </div>
       <HStack gap={0}>

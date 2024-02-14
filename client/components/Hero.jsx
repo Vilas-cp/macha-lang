@@ -15,7 +15,7 @@ const Hero = () => {
         
         'ಮಚ್ಚ ಲ್ಯಾಂಗ್',
         1000,
-        '',
+        'Macha Lang',
         1000
       ]}
       wrapper="span"

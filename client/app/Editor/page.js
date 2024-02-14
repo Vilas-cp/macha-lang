@@ -4,7 +4,7 @@ import Trial from "./components/Trial";
 import Langselector from "./components/Langselector";
 import Codeeditor from "./components/Codeeditor";
 
-export default function Home() {
+export default function Home({paramas}) {
   return (
     <div>
       {/* <button className="h-10 w-24 bg-slate-400 border-black rounded-lg hover:bg-slate-600 mx-24 my-24">

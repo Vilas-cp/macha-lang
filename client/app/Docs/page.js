@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 let text = [
@@ -16,7 +17,8 @@ let text = [
     Type: "if:Use if to specify a block of code to be executed, if a specified condition is true.Use else to specify a block of code to be executed, if the same condition is false.Use else if to specify a new condition to test, if the first condition is false.Use switch to specify many alternative blocks of code to be executed",
     Description:
       "Macha lang supports if conditionl statement, enandre block will execute if specified condition is nija. If the condition is sullu, another block of code can be executed.",
-    Example: "enandre(a>10){<br/><pre style='display: inline;'>    </pre>macha.helu('hello');<br/>}<br/>",
+    Example:
+      "enandre(a>10){<br/><pre style='display: inline;'>    </pre>macha.helu('hello');<br/>}<br/>",
   },
   {
     Name: "illandre",
@@ -39,7 +41,8 @@ let text = [
     Type: "for",
     Description:
       "Macha lang supports for control statement. allivargu is used for iterating over a sequence of elements, typically within a specified range. ",
-    Example: "allivargu(i=0;i<=5;i++){<br/><pre style='display: inline;'>    </pre>macha.helu(i);<br/>}<br/>",
+    Example:
+      "allivargu(i=0;i<=5;i++){<br/><pre style='display: inline;'>    </pre>macha.helu(i);<br/>}<br/>",
   },
   {
     Name: "allitanka",
@@ -54,7 +57,8 @@ let text = [
     Type: "Function",
     Description:
       "In Macha lang, functions can be defined using kelsa. kelsa is a block of reusable code that performs a specific task. It typically takes input parameters, performs operations, and optionally returns a result.",
-    Example: "kelsa(){<br/><pre style='display: inline;'>    </pre>macha.helu('hello world');<br/>}<br/>",
+    Example:
+      "kelsa(){<br/><pre style='display: inline;'>    </pre>macha.helu('hello world');<br/>}<br/>",
   },
   {
     Name: "irlli",
@@ -66,6 +70,7 @@ let text = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   let data = text.map((item) => (
     <div className=" h-full w-full hover:hover:bg-[#04AA6D] hover:cursor-pointer">
       <div className="flex justify-center pt-2 items-center "> {item.Name}</div>
@@ -92,7 +97,10 @@ export default function Home() {
       <div className="flex justify-center">
         <div className="bg-[#E7E9EB] flex flex-col pl-6 gap-[15px] pb-3 w-[100vh] pr-6 shadow-2xl ">
           <div className="font-semibold text-[30px] pt-2">Example</div>
-          <div id={`example_${items.Name}`}  className="bg-white font-mono font-semi ">
+          <div
+            id={`example_${items.Name}`}
+            className="bg-white font-mono font-semi "
+          >
             {/* {items.Example.split("<br/>").map((desc, i) => (
               // <span key={i}>
               //   {desc}
@@ -101,7 +109,7 @@ export default function Home() {
               
             ))} */}
           </div>
-          <div className="bg-[#04AA6D!important] w-[150px] h-[5vh] flex items-center justify-center rounded-lg font-semibold text-white">
+          <div id={`try_it_yourself_${items.Name}`} className="bg-[#04AA6D!important] cursor-pointer w-[150px] h-[5vh] flex items-center justify-center rounded-lg font-semibold text-white">
             Try it yourself -&gt;
           </div>
         </div>
@@ -116,10 +124,19 @@ export default function Home() {
 
   useEffect(() => {
     text.map((desc, i) => {
-      window.document.getElementById(`example_${desc.Name}`).innerHTML = desc.Example;
-
-    })
-  }, [])
+      window.document.getElementById(`example_${desc.Name}`).innerHTML =
+        desc.Example;
+      let examCode = desc.Example;
+      examCode = examCode.replace(/<br\/>/g, "\n");
+      examCode = examCode.replace(
+        /<pre style='display: inline;'>    <\/pre>/g,
+        "\t"
+      );
+      window.document.getElementById(`try_it_yourself_${desc.Name}`).onclick = () => {
+        router.push(`/Editor?code="${examCode}"`);
+      };
+    });
+  }, []);
   return (
     <div>
       <Header />
@@ -130,7 +147,7 @@ export default function Home() {
         {data}
       </div>
       <div className="text-black pt-[84px]">{dataset}</div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

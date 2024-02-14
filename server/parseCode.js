@@ -19,18 +19,23 @@ async function parseMachaLangCode(code) {
     }
     for (let index = 0; index < spiltArray1.length; index++) {
       let element = spiltArray1[index];
+      console.log(element);
 
       if (element.match("allivaragu") !== null) {
         // console.log(element);
         element = element.replace("allivaragu", "for");
         element = element.replace("idu", "let");
-      } else if (element.match("idu") !== null) {
+      } if (element.match("idu") !== null) {
         element = element.replace("idu", "let") + ";";
-      } else if (element.match("irlli") !== null) {
+      } if (element.match("irlli") !== null) {
         element = element.replace("irlli", "const") + ";";
-      } else if (element.match("macha.helu") !== null) {
+      } if (element.match("macha.helu") !== null) {
         element = element.replace("macha.helu", "console.log") + ";";
       }
+      // else {
+      //   console.log(element);
+      //   element = element + ";";
+      // }
       spiltArray2.push(element);
     }
     const resultString = spiltArray2.join("");
