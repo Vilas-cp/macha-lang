@@ -5,19 +5,24 @@ const writeFile = util.promisify(fs.writeFile);
 
 async function parseMachaLangCode(code) {
   if (typeof code === "string") {
+    let logs = "";
     const spiltArray = code.split(/;\n|{\n/);
-
     const spiltArray4 = [];
     const spiltArray5 = [];
-    let prevPoint = 0,
-      nextPoint = 0;
+    let prevPoint = 0;
 
+    logs = logs + "Sub Strings Logs: \n[";
     for (let i = 0; i < code.length; i++) {
       if (i <= 2) {
         continue;
       }
       let subStr = code.slice(i - 2, i);
-      // spiltArray5.push(subStr);
+      let spacing = "";
+      if (i % 10 === 0) {
+        spacing = "\n";
+      }
+      logs = logs + "'" + subStr.replace("\n", "\\n") + "'," + spacing;
+      spiltArray5.push(subStr);
       let ele = null;
       let typeCode;
       if (subStr === ";\n") {
@@ -39,8 +44,7 @@ async function parseMachaLangCode(code) {
       code: code.slice(prevPoint, code.length),
       typeCode: "syntax",
     });
-    console.log(spiltArray4);
-    // console.log(spiltArray5);
+    logs = logs + "]" + "\n\n";
     const spiltArray2 = [];
 
     for (let index = 0; index < spiltArray4.length; index++) {
@@ -54,7 +58,7 @@ async function parseMachaLangCode(code) {
 
     for (let index = 0; index < spiltArray4.length; index++) {
       let element = spiltArray4[index].code;
-      // console.log(element);
+      logs = logs + element + "\n";
 
       if (element.match("allivaragu") !== null) {
         element = element.replace(/allivaragu/g, "for");
@@ -78,7 +82,9 @@ async function parseMachaLangCode(code) {
     }
 
     const resultString = spiltArray2.join("\n");
-    // console.log(resultString);
+    logs = logs + "\nResultant String:\n";
+    logs = logs + resultString + "\n\n" + "Log Writing Ends Here!";
+    logWriting(logs);
     await writeBuildFile(resultString);
     const resultString2 = await runCompiledCode();
     return resultString2;
@@ -119,8 +125,10 @@ async function runCompiledCode() {
   }
 }
 
-function logWriting() {
-
+async function logWriting(logs) {
+  await writeFile("./logs/log.log", logs, {
+    encoding: "utf8",
+  });
 }
 
 module.exports = { parseMachaLangCode };
