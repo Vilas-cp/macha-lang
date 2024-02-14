@@ -32,7 +32,7 @@ async function parseMachaLangCode(code) {
       } if (element.match("macha.helu") !== null) {
         element = element.replace("macha.helu", "console.log") + ";";
       }
-      // else {
+      // if (element ) {
       //   console.log(element);
       //   element = element + ";";
       // }

@@ -10,13 +10,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Langselector from "./Langselector";
 import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
 import { executecode } from "../api";
 
-function Codeeditor() {
+function Codeeditor({ inCode }) {
   const editorRef = useRef();
 
   const [value, setValue] = useState("");
@@ -25,7 +25,6 @@ function Codeeditor() {
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
-
 
   const toast = useToast();
   const runCode = async () => {
@@ -54,6 +53,7 @@ function Codeeditor() {
 
   const onSelect = (selectedLanguage) => {
     setLanguage(selectedLanguage);
+
     setValue(CODE_SNIPPETS[selectedLanguage]);
   };
 
@@ -62,13 +62,19 @@ function Codeeditor() {
     editor.focus();
   };
 
+  useEffect(() => {
+    if (inCode) {
+      setValue(inCode);
+    }
+  }, [inCode]);
+
   return (
     <>
       <div className=" flex top-0 w-full space-x-16  items-center text-center h-20 mt-[-55px] ml-[-30px]">
         <img src="macha.jpg" height={80} width={80} />
 
         <Text mb={2} fontSize="40px" marginTop={10} fontWeight="bold">
-        ಮಚ್ಚ Lang compiler
+          ಮಚ್ಚ Lang compiler
         </Text>
       </div>
       <HStack gap={0}>
@@ -93,7 +99,6 @@ function Codeeditor() {
             defaultValue={CODE_SNIPPETS[def]}
             value={value}
             className="-mt-5"
-            
             line={0}
             options={{ minimap: { enabled: false } }}
             onMount={onMount}
