@@ -5,7 +5,7 @@ import Codeeditor from "./Codeeditor";
 
 function Parent() {
   return (
-    <Box minH="100vh" bg="#0ffff" color="gray.500" px={6} py={8}>
+    <Box minH="100vh" bg="gray.400" px={6} py={8}>
 =<Codeeditor/>
     </Box>
   );
