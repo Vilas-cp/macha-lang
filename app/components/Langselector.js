@@ -4,22 +4,21 @@ import { LANG_VERSIONS } from "./constants";
 import { Box, Button, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 
 const languages = Object.entries(LANG_VERSIONS);
-function Langselector({language, onselect}) {
+function Langselector({language, onSelect}) {
   return (
+    <>
+ 
     <Box >
-     <Text mb={2} fontSize="lg">
-        Languages : 
-     </Text>
-    <Menu>
+    <Menu >
       <MenuButton as={Button} >
     {language}
       </MenuButton>
       <MenuList  >
         {languages.map(([language , version]) => (
-        <MenuItem key={language} onClick={() => onselect(language)}>
+          <MenuItem key={language} onClick={() => onSelect(language)}>
             {language}
              &nbsp;
-             <Text as="span"  fontSize={"small"}>
+             <Text  fontSize="small">
                 {version};
              </Text>
         </MenuItem>))}
@@ -27,6 +26,7 @@ function Langselector({language, onselect}) {
       </MenuList>
     </Menu>
     </Box>
+          </>
   );
 }
 
