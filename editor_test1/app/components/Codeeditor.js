@@ -26,17 +26,16 @@ function Codeeditor() {
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
 
-
   const toast = useToast();
   const runCode = async () => {
     const sourcecode = editorRef.current.getValue();
     if (!sourcecode) return;
     try {
       setisloading(true);
-      const { run: result } = await executecode(language, sourcecode);
-      setOutput(result.output);
+      const result = await executecode(language, sourcecode);
+      console.log(result);
+      setOutput(result.result);
     } catch (error) {
-      // Handle error
       console.log(error);
       toast({
         title: "error occured",
@@ -91,14 +90,13 @@ function Codeeditor() {
             defaultValue={CODE_SNIPPETS[def]}
             value={value}
             className="-mt-5"
-            
             line={0}
             options={{ minimap: { enabled: false } }}
             onMount={onMount}
             onChange={(value) => setValue(value)}
           />
         </Box>
-        <OutputTerminal editorRef={editorRef} language={def} />
+        <OutputTerminal output={output} language={def} />
       </HStack>
     </>
   );

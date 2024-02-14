@@ -6,7 +6,7 @@ export const LANG_VERSIONS = {
   // java: "15.0.2",
 };
 export const CODE_SNIPPETS = {
-  machalang: `\n nodu_macha('Namaste Macha')`,
+  machalang: `\n macha.helu('Namaste Macha')`,
   // javascript: `\n console.log("Namaste");`,
   // python: `print("Namste");`,
   // typescript: ` console.log("Namaste typescript");`,

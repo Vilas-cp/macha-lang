@@ -1,9 +1,7 @@
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-function OutputTerminal({ editorRef, language }) {
-  const [output, setOutput] = useState(null);
-
+function OutputTerminal({ output, language }) {
   return (
     <Box w="50%" color="white" mt={7}>
       {/* <Text mb={2} fontSize={30} fontWeight="bold" color ="black">
@@ -21,7 +19,7 @@ function OutputTerminal({ editorRef, language }) {
         // borderRadius={4}
         // borderColor="#333"
       >
-        {output ? output : "Run code to see output here"}
+        <pre>{output ? output : "Run code to see output here"}</pre>
       </Box>
     </Box>
   );

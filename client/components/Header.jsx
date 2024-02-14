@@ -12,7 +12,7 @@ const Header = () => {
       <div className='flex justify-between pl-[50px] gap-[40px]'>
       <div onClick={()=>router.push("/")} className='hover:cursor-pointer'>Home</div>
       <div onClick={()=>router.push("Docs")} className='cursor-pointer'>Docs</div>
-      <div>Code Editor</div>
+      <div onClick={() => router.push("/Editor")} className='cursor-pointer'>Code Editor</div>
       <div onClick={()=>router.push("Aboutus")} className='cursor-pointer'>About us</div>
       </div>
       </div>

@@ -24,10 +24,10 @@ app.get("/home", (req, res) => {
 
 app.post("/code/macha/v1", async (req, res) => {
   try {
-    // const code = codeSchema.parse(req.body);
-    const code = {
-      code: fs.readFileSync("./index.macha", { encoding: "utf8" }).toString(),
-    };
+    const code = codeSchema.parse(req.body);
+    // const code = {
+    //   code: fs.readFileSync("./index.macha", { encoding: "utf8" }).toString(),
+    // };
 
     const result = await parseMachaLangCode(code.code);
     // const ls = await spawn("node", ["build.js"]);

@@ -33,8 +33,9 @@ function Codeeditor() {
     if (!sourcecode) return;
     try {
       setisloading(true);
-      const { run: result } = await executecode(language, sourcecode);
-      setOutput(result.output);
+      const result = await executecode(language, sourcecode);
+      console.log(result);
+      setOutput(result.result);
     } catch (error) {
       // Handle error
       console.log(error);
@@ -98,7 +99,7 @@ function Codeeditor() {
             onChange={(value) => setValue(value)}
           />
         </Box>
-        <OutputTerminal editorRef={editorRef} language={def} />
+        <OutputTerminal output={output} language={def} />
       </HStack>
     </>
   );
