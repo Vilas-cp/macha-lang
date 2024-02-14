@@ -6,7 +6,6 @@ const writeFile = util.promisify(fs.writeFile);
 async function parseMachaLangCode(code) {
   if (typeof code === "string") {
     let logs = "";
-    const spiltArray = code.split(/;\n|{\n/);
     const spiltArray4 = [];
     const spiltArray5 = [];
     let prevPoint = 0;
@@ -72,6 +71,22 @@ async function parseMachaLangCode(code) {
       if (element.match("macha.helu") !== null) {
         element = element.replace(/macha.helu/g, "console.log");
       }
+      if (element.match("enadre") !== null) {
+        element = element.replace(/enadre/g, "if");
+      }
+      if (element.match("illandre") !== null) {
+        element = element.replace(/illandre/g, "else if");
+      }
+      if (element.match("illava") !== null) {
+        element = element.replace(/illava/g, "else");
+      }
+      if (element.match("allitanka") !== null) {
+        element = element.replace(/allitanka/g, "while");
+      }
+      if (element.match("kelsa") !== null) {
+        element = element.replace(/kelsa/g, "function");
+      }
+
       if (spiltArray4[index].typeCode === "syntax") {
         element = element + ";";
       } else if (spiltArray4[index].typeCode === "callfun") {
@@ -106,6 +121,12 @@ function reverseCode(code) {
   code = code.replace(/let/g, "idu");
   code = code.replace(/const/g, "irlli");
   code = code.replace(/console.log/g, "macha.helu");
+  code = code.replace(/else if/g, "illandre");
+  code = code.replace(/else/g, "illava");
+  code = code.replace(/if/g, "enadre");
+  code = code.replace(/while/g, "allitanka");
+  code = code.replace(/function/g, "kelsa");
+
   return code;
 }
 
