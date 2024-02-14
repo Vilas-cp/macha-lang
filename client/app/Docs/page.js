@@ -71,9 +71,10 @@ export default function Home() {
         /<pre style='display: inline;'>    <\/pre>/g,
         "\t"
       );
+      // console.log(encodeURIComponent(examCode));
       window.document.getElementById(`try_it_yourself_${desc.Name}`).onclick =
         () => {
-          router.push(`/Editor?code="${examCode}"`);
+          router.push(`/Editor?code=${encodeURIComponent(examCode)}`);
         };
     });
   }, []);
