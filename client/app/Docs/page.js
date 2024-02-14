@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect } from "react";
 
@@ -129,6 +130,7 @@ export default function Home() {
         {data}
       </div>
       <div className="text-black pt-[84px]">{dataset}</div>
+      <Footer/>
     </div>
   );
 }
