@@ -71,8 +71,8 @@ async function parseMachaLangCode(code) {
       if (element.match("macha.helu") !== null) {
         element = element.replace(/macha.helu/g, "console.log");
       }
-      if (element.match("enadre") !== null) {
-        element = element.replace(/enadre/g, "if");
+      if (element.match("enandre") !== null) {
+        element = element.replace(/enandre/g, "if");
       }
       if (element.match("illandre") !== null) {
         element = element.replace(/illandre/g, "else if");
@@ -100,6 +100,7 @@ async function parseMachaLangCode(code) {
     logs = logs + "\nResultant String:\n";
     logs = logs + resultString + "\n\n" + "Log Writing Ends Here!";
     logWriting(logs);
+    // TODO: Need to add error log detection implement
     await writeBuildFile(resultString);
     const resultString2 = await runCompiledCode();
     return resultString2;
@@ -123,7 +124,7 @@ function reverseCode(code) {
   code = code.replace(/console.log/g, "macha.helu");
   code = code.replace(/else if/g, "illandre");
   code = code.replace(/else/g, "illava");
-  code = code.replace(/if/g, "enadre");
+  code = code.replace(/if/g, "enandre");
   code = code.replace(/while/g, "allitanka");
   code = code.replace(/function/g, "kelsa");
 
@@ -138,8 +139,15 @@ async function runCompiledCode() {
     if (stderr) {
       console.log(stderr);
       return stderr;
+    } else {
+      await exec("rollup -c");
+      const { stdout, stderr } = await exec("node ./build/bundle.js");
+      if (stderr) {
+        console.log(stderr);
+        return stderr;
+      }
+      return stdout;
     }
-    return stdout;
   } catch (error) {
     console.log(error);
     return reverseCode(error.stderr);

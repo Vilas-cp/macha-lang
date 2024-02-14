@@ -1,0 +1,32 @@
+idu node = {
+    data: null,
+    next: null,
+};
+
+kelsa nodeMadu(data) {
+    const node = {
+        data: data,
+        next: null,
+    };
+    return node;
+}
+
+kelsa some(abc) {
+    macha.helu(abc + " Wow Fun");
+}
+
+some(node.next);
+idu nodeList = [];
+const head = nodeMadu(10);
+let current = head;
+
+allivaragu (idu i = 0; i < 10; i++) {
+    const newNode = nodeMadu(20 + 1 + i);
+    current.next = newNode;
+    current = newNode
+}
+
+current = head;
+allitanka (current.next !== null) {
+    macha.helu(current.data);
+    current = current.next;

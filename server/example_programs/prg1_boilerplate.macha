@@ -1,0 +1,11 @@
+idu a = 100;
+idu b = 20;
+allivaragu (idu i = 0; i<=10; i++) {
+    macha.helu((a+b)+(8+9));
+}
+
+kelsa some(abc) {
+    macha.helu(abc + " Wow Fun");
+}
+
+some("Nice");

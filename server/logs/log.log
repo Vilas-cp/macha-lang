@@ -1,26 +1,125 @@
 Sub Strings Logs: 
-['du','u ',' a','a ',' =','= ',' 1','10',
-'00','0;',';\n','\ni','id','du','u ',' b','b ',' =',
-'= ',' 2','20','0;',';\n','\na','al','ll','li','iv',
-'va','ar','ra','ag','gu','u ',' (','(i','id','du',
-'u ',' i','i ',' =','= ',' 0','0;','; ',' i','i<',
-'<=','=1','10','0;','; ',' i','i+','++','+)',') ',
-' {','{\n','\n ','  ','  ','  ',' m','ma','ac','ch',
-'ha','a.','.h','he','el','lu','u(','((','(a','a+',
-'+b','b)',')+','+(','(8','8+','+9','9)','))',');',
-';\n',]
+['du','u ',' n','no','od','de','e ',' =',
+'= ',' {','{\n','\n ','  ','  ','  ',' d','da','at',
+'ta','a:',': ',' n','nu','ul','ll','l,',',\n','\n ',
+'  ','  ','  ',' n','ne','ex','xt','t:',': ',' n',
+'nu','ul','ll','l,',',\n','\n}','};',';\n','\n
+','\nk',
+'ke','el','ls','sa','a ',' n','no','od','de','eM',
+'Ma','ad','du','u(','(d','da','at','ta','a)',') ',
+' {','{\n','\n ','  ','  ','  ',' c','co','on','ns',
+'st','t ',' n','no','od','de','e ',' =','= ',' {',
+'{\n','\n ','  ','  ','  ','  ','  ','  ','  ',' d',
+'da','at','ta','a:',': ',' d','da','at','ta','a,',
+',\n','\n ','  ','  ','  ','  ','  ','  ','  ',' n',
+'ne','ex','xt','t:',': ',' n','nu','ul','ll','l,',
+',\n','\n ','  ','  ','  ',' }','};',';\n','\n ','  ',
+'  ','  ',' r','re','et','tu','ur','rn','n ',' n',
+'no','od','de','e;',';\n','\n}','}\n','\n
+','\nk','ke',
+'el','ls','sa','a ',' s','so','om','me','e(','(a',
+'ab','bc','c)',') ',' {','{\n','\n ','  ','  ','  ',
+' m','ma','ac','ch','ha','a.','.h','he','el','lu',
+'u(','(a','ab','bc','c ',' +','+ ',' "','" ',' W',
+'Wo','ow','w ',' F','Fu','un','n"','")',');',';\n',
+'\n}','}\n','\n
+','\ns','so','om','me','e(','(n','no',
+'od','de','e.','.n','ne','ex','xt','t)',');',';\n',
+'\ni','id','du','u ',' n','no','od','de','eL','Li',
+'is','st','t ',' =','= ',' [','[]','];',';\n','\nc',
+'co','on','ns','st','t ',' h','he','ea','ad','d ',
+' =','= ',' n','no','od','de','eM','Ma','ad','du',
+'u(','(1','10','0)',');',';\n','\nl','le','et','t ',
+' c','cu','ur','rr','re','en','nt','t ',' =','= ',
+' h','he','ea','ad','d;',';\n','\n
+','\na','al','ll',
+'li','iv','va','ar','ra','ag','gu','u ',' (','(i',
+'id','du','u ',' i','i ',' =','= ',' 0','0;','; ',
+' i','i ',' <','< ',' 1','10','0;','; ',' i','i+',
+'++','+)',') ',' {','{\n','\n ','  ','  ','  ',' c',
+'co','on','ns','st','t ',' n','ne','ew','wN','No',
+'od','de','e ',' =','= ',' n','no','od','de','eM',
+'Ma','ad','du','u(','(1','10','0 ',' +','+ ',' 1',
+'1 ',' +','+ ',' i','i)',');',';\n','\n ','  ','  ',
+'  ',' c','cu','ur','rr','re','en','nt','t.','.n',
+'ne','ex','xt','t ',' =','= ',' n','ne','ew','wN',
+'No','od','de','e;',';\n','\n ','  ','  ','  ',' c',
+'cu','ur','rr','re','en','nt','t ',' =','= ',' n',
+'ne','ew','wN','No','od','de','e\n','\n}','}\n','\n
+',
+'\nc','cu','ur','rr','re','en','nt','t ',' =','= ',
+' h','he','ea','ad','d;',';\n','\na','al','ll','li',
+'it','ta','an','nk','ka','a ',' (','(c','cu','ur',
+'rr','re','en','nt','t.','.n','ne','ex','xt','t ',
+' !','!=','==','= ',' n','nu','ul','ll','l)',') ',
+' {','{\n','\n ','  ','  ','  ',' e','en','na','an',
+'nd','dr','re','e ',' (','(c','cu','ur','rr','re',
+'en','nt','t.','.d','da','at','ta','a ',' <','< ',
+' 1','15','5)',') ',' {','{\n','\n ','  ','  ','  ',
+'  ','  ','  ','  ',' m','ma','ac','ch','ha','a.',
+'.h','he','el','lu','u(','("','"C','Ch','hi','ik',
+'ku','u ',' N','Nu','um','mb','be','er','r ',' "',
+'" ',' +','+ ',' c','cu','ur','rr','re','en','nt',
+'t.','.d','da','at','ta','a)',');',';\n','\n ','  ',
+'  ','  ',' }','}\n','\n ','  ','  ','  ',' i','il',
+'ll','la','av','va','a ',' {','{\n','\n ','  ','  ',
+'  ','  ','  ','  ','  ',' m','ma','ac','ch','ha',
+'a.','.h','he','el','lu','u(','("','"D','Do','od',
+'du','u ',' N','Nu','um','mb','be','er','r ',' "',
+'" ',' +','+ ',' c','cu','ur','rr','re','en','nt',
+'t.','.d','da','at','ta','a)',');',';\n','\n ','  ',
+'  ','  ',' }','}\n','\n ','  ','  ','  ',' c','cu',
+'ur','rr','re','en','nt','t ',' =','= ',' c','cu',
+'ur','rr','re','en','nt','t.','.n','ne','ex','xt',
+'t;',';\n',]
 
-idu a = 100
-idu b = 20
-allivaragu (idu i = 0; i<=10; i++) 
-    macha.helu((a+b)+(8+9))
+idu node = 
+    data: null,    next: null,}
+kelsa nodeMadu(data) 
+    const node = 
+        data: data,        next: null,    }
+    return node
+}kelsa some(abc) 
+    macha.helu(abc + " Wow Fun")
+}some(node.next)
+idu nodeList = []
+const head = nodeMadu(10)
+let current = head
+allivaragu (idu i = 0; i < 10; i++) 
+    const newNode = nodeMadu(10 + 1 + i)
+    current.next = newNode
+    current = newNode}current = head
+allitanka (current.next !== null) 
+    enandre (current.data < 15) 
+        macha.helu("Chiku Number " + current.data)
+    }    illava 
+        macha.helu("Dodu Number " + current.data)
+    }    current = current.next
 }
 
 Resultant String:
-let a = 100;
-let b = 20;
-for (let i = 0; i<=10; i++) {
-    console.log((a+b)+(8+9));
+let node = {
+    data: null,    next: null,};
+function nodeMadu(data) {
+    const node = {
+        data: data,        next: null,    };
+    return node;
+}function some(abc) {
+    console.log(abc + " Wow Fun");
+}some(node.next);
+let nodeList = [];
+const head = nodeMadu(10);
+let current = head;
+for (let i = 0; i < 10; i++) {
+    const newNode = nodeMadu(10 + 1 + i);
+    current.next = newNode;
+    current = newNode}current = head;
+while (current.next !== null) {
+    if (current.data < 15) {
+        console.log("Chiku Number " + current.data);
+    }    else {
+        console.log("Dodu Number " + current.data);
+    }    current = current.next;
 };
 
 Log Writing Ends Here!

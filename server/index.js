@@ -24,7 +24,7 @@ app.get("/home", (req, res) => {
 app.post("/code/macha/v1", async (req, res) => {
   try {
     let code;
-
+    console.log("Request has been made, code has been given!")
     if (req.body.code) {
       code = codeSchema.parse(req.body);
     } else {
@@ -37,9 +37,11 @@ app.post("/code/macha/v1", async (req, res) => {
 
     res.status(200);
     // console.log(result);
+    console.log("Code has been compiled, and result has been sent!!");
     res.send({ result });
   } catch (error) {
     console.log(error);
+    console.log("Code has gotten errors, and eroor message has been sent!!");
     res.status(500);
     res.send(error);
   }
