@@ -9,6 +9,8 @@
 # production
 /build
 /logs
+/build1
+/logs1
 
 yarn-error.log*
 
