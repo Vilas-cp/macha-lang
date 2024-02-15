@@ -1,1 +1,1 @@
-!function(n){"function"==typeof define&&define.amd?define(n):n()}((function(){"use strict";function n(n){return{data:n,next:null}}var e;e=null,console.log(e+" Wow Fun");const o=n(10);let t=o;for(let e=0;e<10;e++){const o=n(11+e);t.next=o,t=o}for(t=o;null!==t.next;)t.data<15?console.log("Chiku Number "+t.data):console.log("Dodu Number "+t.data),t=t.next}));
+!function(e){"function"==typeof define&&define.amd?define(e):e()}((function(){"use strict";console.log("Namaste Macha");for(let e=0;e<10;e++)console.log("Hello BGSCET")}));

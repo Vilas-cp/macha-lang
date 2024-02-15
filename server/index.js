@@ -24,7 +24,7 @@ app.get("/home", (req, res) => {
 app.post("/code/macha/v1", async (req, res) => {
   try {
     let code;
-    console.log("Request has been made, code has been given!")
+    console.log("Request has been made, code has been given!");
     if (req.body.code) {
       code = codeSchema.parse(req.body);
     } else {

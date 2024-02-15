@@ -7,8 +7,8 @@
 .yarn/install-state.gz
 
 # production
-# /build
-# /logs
+/build
+/logs
 
 yarn-error.log*
 

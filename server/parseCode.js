@@ -86,6 +86,9 @@ async function parseMachaLangCode(code) {
       if (element.match("kelsa") !== null) {
         element = element.replace(/kelsa/g, "function");
       }
+      if (element.match("kodu") !== null) {
+        element = element.replace(/kodu/g, "return");
+      }
 
       if (spiltArray4[index].typeCode === "syntax") {
         element = element + ";";
@@ -102,7 +105,7 @@ async function parseMachaLangCode(code) {
     logWriting(logs);
     // TODO: Need to add error log detection implement
     await writeBuildFile(resultString);
-    const resultString2 = await runCompiledCode();
+    const resultString2 = await runCompiledCode(logs);
     return resultString2;
   }
 }
@@ -127,11 +130,12 @@ function reverseCode(code) {
   code = code.replace(/if/g, "enandre");
   code = code.replace(/while/g, "allitanka");
   code = code.replace(/function/g, "kelsa");
-
+  code = code.replace(/return/g, "kodu");
+  code = code.replace("Node.js v20.11.0", "ಮಚ್ಚLang v1.0.2");
   return code;
 }
 
-async function runCompiledCode() {
+async function runCompiledCode(logs) {
   try {
     // await exec("rollup -c");
     // const { stdout, stderr } = await exec("node ./build/bundle.js");
@@ -144,12 +148,17 @@ async function runCompiledCode() {
       const { stdout, stderr } = await exec("node ./build/bundle.js");
       if (stderr) {
         console.log(stderr);
+        logs = logs + "Output Compiled Error: \n" + stderr + "\n\n" + "Output Error: \n" + reverseCode(stderr);
         return stderr;
       }
+      logs = logs + "Output of Code: \n" + stdout;
+      logWriting(logs);
       return stdout;
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    logs = logs + "Output Compiled Error: \n" + error.stderr + "\n\n" + "Output Error: \n" + reverseCode(error.stderr);
+    logWriting(logs);
     return reverseCode(error.stderr);
   }
 }
