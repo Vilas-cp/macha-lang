@@ -78,6 +78,15 @@ export default function Home() {
         };
     });
   }, []);
+
+  useEffect(() => {
+    async function getWasm() {
+      const data = await fetch("http://localhost:8080/static/build.wasm");
+      const output = await data.text();
+      console.log(output);
+    }
+    getWasm();
+  }, []);
   return (
     <div>
       <Header />

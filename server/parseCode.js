@@ -101,9 +101,8 @@ async function parseMachaLangCode(code) {
 
     const resultString = spiltArray2.join("\n");
     logs = logs + "\nResultant String:\n";
-    logs = logs + resultString + "\n\n" + "Log Writing Ends Here!";
+    logs = logs + resultString + "\n\n" + "Log Writing Ends Here!\n";
     logWriting(logs);
-    // TODO: Need to add error log detection implement
     await writeBuildFile(resultString);
     const resultString2 = await runCompiledCode(logs);
     return resultString2;
@@ -145,21 +144,40 @@ async function runCompiledCode(logs) {
       return stderr;
     } else {
       await exec("rollup -c");
-      const { stdout, stderr } = await exec("node ./build/bundle.js");
-      if (stderr) {
+      // const { stdout, stderr } = await exec("node ./build/bundle.js");
+      await exec("javy compile ./build/bundle.js -o ./build/bundle.asm");
+      const { stdout, stderr } = await exec("wasmtime run ./build/bundle.asm");
+      if (stderr !== null) {
+        // console.log(stdout + stderr);
+        logs = logs + "Output of Code: \n" + stderr;
+        console.log(logs);
+        await logWriting(logs);
+        return { result: stderr, statusCode: null };
+      } else {
+        console.log(stdout);
         console.log(stderr);
-        logs = logs + "Output Compiled Error: \n" + stderr + "\n\n" + "Output Error: \n" + reverseCode(stderr);
-        return stderr;
+        logs =
+          logs +
+          "Output Compiled Error: \n" +
+          stderr +
+          "\n\n" +
+          "Output Error: \n" +
+          reverseCode(stderr);
+        logWriting(logs);
+        return { result: stdout + stderr, statusCode: "error" };
       }
-      logs = logs + "Output of Code: \n" + stdout;
-      logWriting(logs);
-      return stdout;
     }
   } catch (error) {
     // console.log(error);
-    logs = logs + "Output Compiled Error: \n" + error.stderr + "\n\n" + "Output Error: \n" + reverseCode(error.stderr);
+    logs =
+      logs +
+      "Output Compiled Error: \n" +
+      error.stderr +
+      "\n\n" +
+      "Output Error: \n" +
+      reverseCode(error.stderr);
     logWriting(logs);
-    return reverseCode(error.stderr);
+    return { result: reverseCode(error.stderr), statusCode: "error" };
   }
 }
 

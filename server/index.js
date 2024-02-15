@@ -10,7 +10,7 @@ const codeSchema = z.object({ code: z.string() });
 
 app.use(express.json());
 app.use(cors());
-app.use("/static",express.static("public"));
+app.use("/static", express.static("public"));
 
 app.get("/home", (req, res) => {
   try {
@@ -38,8 +38,13 @@ app.post("/code/macha/v1", async (req, res) => {
 
     res.status(200);
     // console.log(result);
-    console.log("Code has been compiled, and result has been sent!!");
-    res.send({ result });
+    if (result.statusCode === null) {
+      console.log("Code has been compiled, and result has been sent!!");
+      res.send({ result: result.result.toString() });
+    } else if (result.statusCode === "error") {
+      console.log("Code has gotten errors, and eroor message has been sent!!");
+      res.send({ result: result.result.toString() });
+    }
   } catch (error) {
     console.log(error);
     console.log("Code has gotten errors, and eroor message has been sent!!");
