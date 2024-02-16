@@ -31,6 +31,17 @@ const Header = () => {
             >
               About us
             </div>
+            <div
+              onClick={() => router.push("LiveClass")}
+              className="cursor-pointer"
+            >
+              <a className="cursor-pointer">
+                <img
+                  src="https://img.icons8.com/?size=100&id=3651&format=png"
+                  width={25}
+                />
+              </a>
+            </div>
           </div>
         </div>
         <div>
