@@ -34,7 +34,6 @@ async function parseMachaLangCode(code) {
         continue;
       }
       if (code[i] === '"') {
-        console.log("in");
         codeIsInQuotes.push({
           codeString: code[i],
           type: "doublequotes",
@@ -59,9 +58,7 @@ async function parseMachaLangCode(code) {
         prevPoint = i + 1;
         spiltArray4.push(codeLine);
         if (codeLine.match('"')) {
-          console.log("In");
         }
-        console.log(codeLine);
         logs =
           logs +
           "'" +
@@ -156,21 +153,119 @@ async function writeBuildFile(code) {
 }
 
 function reverseCode(code) {
-  code = code.replace(/for/g, "allivaragu");
-  code = code.replace(/let/g, "idu");
-  code = code.replace(/const/g, "irlli");
-  code = code.replace(/process\.stdout\.write\(''\+/g, "macha.helu(");
-  code = code.replace(/else if/g, "illandre");
-  code = code.replace(/else/g, "illava");
-  code = code.replace(/if/g, "enandre");
-  code = code.replace(/while/g, "allitanka");
-  code = code.replace(/function/g, "kelsa");
-  code = code.replace(/return/g, "kodu");
-  code = code.replace(/true/g, "sari");
-  code = code.replace(/false/g, "tapu");
-  code = code.replace(/null/g, "khali");
-  code = code.replace(/undefined/g, "enuilla");
-  code = code.replace(/continue/g, "mundehogu");
+  // console.log(code);
+  code = code.replace("build/build.js", "build/compiled.macha");
+  let spacing = "";
+  let negaOrPost = 0;
+  if (code.match(/for/) !== null) {
+    code = code.replace(/for/g, "allivaragu");
+    spacing =
+      spacing + " ".repeat(Math.abs("for".length - "allivaragu".length));
+    negaOrPost = negaOrPost + ("for".length - "allivaragu".length) * -1;
+  }
+
+  if (code.match(/let/) !== null) {
+    code = code.replace(/let/g, "idu");
+    spacing = spacing + " ".repeat(Math.abs("let".length - "idu".length));
+    negaOrPost = negaOrPost + ("let".length - "idu".length) * -1;
+  }
+
+  if (code.match(/const/) !== null) {
+    code = code.replace(/const/g, "irlli");
+    spacing = spacing + " ".repeat(Math.abs("const".length - "irlli".length));
+    negaOrPost = negaOrPost + ("const".length - "irlli".length) * -1;
+  }
+
+  if (code.match(/process\.stdout\.write\(''\+/g) !== null) {
+    code = code.replace(/process\.stdout\.write\(''\+/g, "macha.helu(");
+    spacing =
+      spacing +
+      " ".repeat(
+        Math.abs("process.stdout.write(''+".length - "macha.helu(".length)
+      );
+    negaOrPost =
+      negaOrPost +
+      ("process.stdout.write(''+".length - "macha.helu(".length) * -1;
+  }
+
+  if (code.match(/else if/) !== null) {
+    code = code.replace(/else if/g, "illandre");
+    spacing =
+      spacing + " ".repeat(Math.abs("else if".length - "illandre".length));
+    negaOrPost = negaOrPost + ("else if".length - "illandre".length) * -1;
+  }
+
+  if (code.match(/else/) !== null) {
+    code = code.replace(/else/g, "illava");
+    spacing = spacing + " ".repeat(Math.abs("else".length - "illava".length));
+    negaOrPost = negaOrPost + ("else".length - "illava".length) * -1;
+  }
+
+  if (code.match(/if/) !== null) {
+    code = code.replace(/if/g, "enandre");
+    spacing = spacing + " ".repeat(Math.abs("if".length - "enandre".length));
+    negaOrPost = negaOrPost + ("if".length - "enandre".length) * -1;
+  }
+
+  if (code.match(/while/) !== null) {
+    code = code.replace(/while/g, "allitanka");
+    spacing =
+      spacing + " ".repeat(Math.abs("while".length - "allitanka".length));
+    negaOrPost = negaOrPost + ("while".length - "allitanka".length) * -1;
+  }
+
+  if (code.match(/function/) !== null) {
+    code = code.replace(/function/g, "kelsa");
+    spacing =
+      spacing + " ".repeat(Math.abs("function".length - "kelsa".length));
+    negaOrPost = negaOrPost + ("function".length - "kelsa".length) * -1;
+  }
+
+  if (code.match(/return/) !== null) {
+    code = code.replace(/return/g, "kodu");
+    spacing = spacing + " ".repeat(Math.abs("return".length - "kodu".length));
+    negaOrPost = negaOrPost + ("return".length - "kodu".length) * -1;
+  }
+
+  if (code.match(/true/) !== null) {
+    code = code.replace(/true/g, "sari");
+    spacing = spacing + " ".repeat(Math.abs("true".length - "sari".length));
+    negaOrPost = negaOrPost + ("true".length - "sari".length) * -1;
+  }
+
+  if (code.match(/false/) !== null) {
+    code = code.replace(/false/g, "tapu");
+    spacing = spacing + " ".repeat(Math.abs("false".length - "tapu".length));
+    negaOrPost = negaOrPost + ("false".length - "tapu".length) * -1;
+  }
+
+  if (code.match(/null/) !== null) {
+    code = code.replace(/null/g, "khali");
+    spacing = spacing + " ".repeat(Math.abs("null".length - "khali".length));
+    negaOrPost = negaOrPost + ("null".length - "khali".length) * -1;
+  }
+
+  if (code.match(/undefined/) !== null) {
+    code = code.replace(/undefined/g, "enuilla");
+    spacing =
+      spacing + " ".repeat(Math.abs("undefined".length - "enuilla".length));
+    negaOrPost = negaOrPost + ("undefined".length - "enuilla".length) * -1;
+  }
+
+  if (code.match(/continue/) !== null) {
+    code = code.replace(/continue/g, "mundehogu");
+    spacing =
+      spacing + " ".repeat(Math.abs("continue".length - "mundehogu".length));
+    negaOrPost = negaOrPost + ("continue".length - "mundehogu".length) * -1;
+  }
+
+  if (negaOrPost === 0) {
+    null;
+  } else if (negaOrPost > 0) {
+    code = code.replace("^", spacing + "^");
+  } else if (negaOrPost < 0) {
+    code = code.replace(spacing + "^", "^");
+  }
   code = code.replace("Node.js v20.11.0", "ಮಚ್ಚLang v1.0.2");
   return code;
 }
