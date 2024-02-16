@@ -25,10 +25,10 @@ function registerLang() {
   let some = 10;
   const somenew = 20;
   console.log(some + somenew);
-  monaco.languages.register({ id: "mySpecialLanguage" });
+  monaco.languages.register({ id: "MACHALang" });
 
   // Register a tokens provider for the language
-  monaco.languages.setMonarchTokensProvider("mySpecialLanguage", {
+  monaco.languages.setMonarchTokensProvider("MACHALang", {
     tokenizer: {
       root: [
         [/".*"/, "string-matching"],
@@ -58,7 +58,7 @@ function registerLang() {
   });
 
   // Define a new theme that contains only rules that match this language
-  monaco.editor.defineTheme("myCoolTheme", {
+  monaco.editor.defineTheme("MACHALangTheme", {
     base: "vs",
     inherit: false,
     rules: [
@@ -80,7 +80,7 @@ function registerLang() {
   });
 
   // Register a completion item provider for the new language
-  monaco.languages.registerCompletionItemProvider("mySpecialLanguage", {
+  monaco.languages.registerCompletionItemProvider("MACHALang", {
     provideCompletionItems: (model, position) => {
       var word = model.getWordUntilPosition(position);
       var range = {
@@ -132,7 +132,7 @@ function Codeeditor({ inCode }) {
   const editorRef = useRef();
 
   const [value, setValue] = useState("");
-  const [language, setLanguage] = useState("mySpecialLanguage");
+  const [language, setLanguage] = useState("MACHALang");
   const [def, setdef] = useState("machalang");
 
   const [output, setOutput] = useState(null);
@@ -187,9 +187,9 @@ function Codeeditor({ inCode }) {
       console.log(editor);
       console.log(editor.create);
       // monaco.editor.create(window.document.getElementById("containerEditor"), {
-      //   theme: "myCoolTheme",
+      //   theme: "MACHALangTheme",
       //   value: CODE_SNIPPETS[def],
-      //   language: "mySpecialLanguage",
+      //   language: "MACHALang",
       // });
     }
   }, []);
@@ -207,7 +207,7 @@ function Codeeditor({ inCode }) {
       <HStack gap={0}>
         <Box w="50%" mt={4} ml={-30}>
           <div className="block">
-            <Langselector language={"mySpecialLanguage"} onSelect={onSelect} />
+            <Langselector language={"MACHALang"} onSelect={onSelect} />
             <Button
               variant="outline"
               bg="green.300"
@@ -221,8 +221,8 @@ function Codeeditor({ inCode }) {
           </div>
           <Editor
             height="100vh"
-            theme="myCoolTheme"
-            defaultLanguage={"mySpecialLanguage"}
+            theme="MACHALangTheme"
+            defaultLanguage={"MACHALang"}
             defaultValue={CODE_SNIPPETS[def]}
             value={value}
             className="-mt-5"
