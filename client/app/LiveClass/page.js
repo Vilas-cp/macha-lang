@@ -191,7 +191,7 @@ export default function Home() {
               ref={webcamVideoRef}
               className="w-40vw h-30vw m-8 bg-blue-700"
               autoPlay
-              playsinline
+              playsInline
             ></video>
           </span>
           <span>
@@ -199,7 +199,7 @@ export default function Home() {
             <video
               ref={remoteVideoRef}
               autoPlay
-              playsinline
+              playsInline
               className="w-40vw h-30vw m-8 bg-blue-800"
             ></video>
           </span>

@@ -8,55 +8,74 @@ async function parseMachaLangCode(code) {
     let logs = "";
     const spiltArray4 = [];
     const spiltArray5 = [];
+    const codeIsInQuotes = [];
     let prevPoint = 0;
 
     logs = logs + "Sub Strings Logs: \n[";
+
     for (let i = 0; i < code.length; i++) {
-      if (i <= 2) {
+      if (codeIsInQuotes.length > 0) {
+        if (
+          code[i] === '"' &&
+          codeIsInQuotes[codeIsInQuotes.length - 1].type === "doublequotes"
+        ) {
+          codeIsInQuotes.pop();
+        } else if (
+          code[i] === "'" &&
+          codeIsInQuotes[codeIsInQuotes.length - 1].type === "singlequotes"
+        ) {
+          codeIsInQuotes.pop();
+        } else if (
+          code[i] === "`" &&
+          codeIsInQuotes[codeIsInQuotes.length - 1].type === "stringliteral"
+        ) {
+          codeIsInQuotes.pop();
+        }
         continue;
       }
-      let subStr = code.slice(i - 2, i);
-      let spacing = "";
-      if (i % 10 === 0) {
-        spacing = "\n";
+      if (code[i] === '"') {
+        console.log("in");
+        codeIsInQuotes.push({
+          codeString: code[i],
+          type: "doublequotes",
+          linenumber: spiltArray4.length + 1,
+        });
+      } else if (code[i] === "'") {
+        codeIsInQuotes.push({
+          codeString: code[i],
+          type: "singlequotes",
+          linenumber: spiltArray4.length + 1,
+        });
+      } else if (code[i] === "`") {
+        codeIsInQuotes.push({
+          codeString: code[i],
+          type: "stringliteral",
+          linenumber: spiltArray4.length + 1,
+        });
       }
-      logs = logs + "'" + subStr.replace("\n", "\\n") + "'," + spacing;
-      spiltArray5.push(subStr);
-      let ele = null;
-      let typeCode;
-      if (subStr === ";\n") {
-        ele = code.slice(prevPoint, i - 2);
-        // For now no need trim()
-        // ele = code.slice(prevPoint, i - 2).trim();
-        prevPoint = i;
-        typeCode = "syntax";
-      } else if (subStr === "{\n") {
-        ele = code.slice(prevPoint, i - 2);
-        prevPoint = i;
-        typeCode = "callfun";
-      }
-      if (ele !== null) {
-        spiltArray4.push({ code: ele, typeCode });
+
+      if (code[i] === "\n" && codeIsInQuotes.length === 0) {
+        let codeLine = code.slice(prevPoint, i);
+        prevPoint = i + 1;
+        spiltArray4.push(codeLine);
+        logs = logs + "'" + codeLine.replace(/'/g, "\"") + "',\n";
       }
     }
-    spiltArray4.push({
-      code: code.slice(prevPoint, code.length),
-      typeCode: "syntax",
-    });
+    spiltArray4.push(code.slice(prevPoint, code.length));
     logs = logs + "]" + "\n\n";
     const spiltArray2 = [];
 
-    for (let index = 0; index < spiltArray4.length; index++) {
-      let element = spiltArray4[index].code;
-      element = element.replace(/\n/g, "");
-      if (element === "") {
-        continue;
-      }
-      spiltArray4[index].code = element;
-    }
+    // for (let index = 0; index < spiltArray4.length; index++) {
+    //   let element = spiltArray4[index].code;
+    //   element = element.replace(/\n/g, "");
+    //   if (element === "") {
+    //     continue;
+    //   }
+    //   spiltArray4[index].code = element;
+    // }
 
     for (let index = 0; index < spiltArray4.length; index++) {
-      let element = spiltArray4[index].code;
+      let element = spiltArray4[index];
       logs = logs + element + "\n";
 
       if (element.match("allivaragu") !== null) {
@@ -89,12 +108,22 @@ async function parseMachaLangCode(code) {
       if (element.match("kodu") !== null) {
         element = element.replace(/kodu/g, "return");
       }
-
-      if (spiltArray4[index].typeCode === "syntax") {
-        element = element + ";";
-      } else if (spiltArray4[index].typeCode === "callfun") {
-        element = element + "{";
+      if (element.match("sari") !== null) {
+        element = element.replace(/sari/g, "true");
       }
+      if (element.match("tapu") !== null) {
+        element = element.replace(/tapu/g, "false");
+      }
+      if (element.match("kalli") !== null) {
+        element = element.replace(/kalli/g, "null");
+      }
+      if (element.match("enuilla") !== null) {
+        element = element.replace(/enuilla/g, "undefined");
+      }
+      if (element.match("mundehogu") !== null) {
+        element = element.replace(/mundehogu/g, "continue");
+      }
+       
 
       spiltArray2.push(element);
     }
@@ -130,6 +159,11 @@ function reverseCode(code) {
   code = code.replace(/while/g, "allitanka");
   code = code.replace(/function/g, "kelsa");
   code = code.replace(/return/g, "kodu");
+  code = code.replace(/true/g, "sari");
+  code = code.replace(/false/g, "tapu");
+  code = code.replace(/null/g, "kalli");
+  code = code.replace(/undefined/g, "enuilla");
+  code = code.replace(/continue/g, "mundehogu");
   code = code.replace("Node.js v20.11.0", "ಮಚ್ಚLang v1.0.2");
   return code;
 }
@@ -143,6 +177,8 @@ async function runCompiledCode(logs) {
       console.log(stderr);
       return stderr;
     } else {
+      return { result: stdout, statusCode: null };
+      /*
       await exec("rollup -c");
       // const { stdout, stderr } = await exec("node ./build/bundle.js");
       await exec("javy compile ./build/bundle.js -o ./build/bundle.asm");
@@ -150,12 +186,10 @@ async function runCompiledCode(logs) {
       if (stderr !== null) {
         // console.log(stdout + stderr);
         logs = logs + "Output of Code: \n" + stderr;
-        console.log(logs);
-        await logWriting(logs);
+        // console.log(logs);
+        logWriting(logs);
         return { result: stderr, statusCode: null };
       } else {
-        console.log(stdout);
-        console.log(stderr);
         logs =
           logs +
           "Output Compiled Error: \n" +
@@ -166,6 +200,7 @@ async function runCompiledCode(logs) {
         logWriting(logs);
         return { result: stdout + stderr, statusCode: "error" };
       }
+      */
     }
   } catch (error) {
     // console.log(error);
