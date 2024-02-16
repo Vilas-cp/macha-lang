@@ -1,21 +1,17 @@
-idu node = {
-    data: null,
-    next: null,
+irlli node = {
+    data: khali,
+    next: khali,
 };
 
 kelsa nodeMadu(data) {
     irlli node = {
         data: data,
-        next: null,
+        next: khali,
     };
     kodu node;
 }
 
-kelsa some(abc) {
-    macha.helu(abc + " Wow Fun");
-}
-
-some('node.next');
+idu idu1 = '90';
 idu nodeList = [];
 irlli head = nodeMadu(10);
 let current = head;
@@ -27,7 +23,9 @@ allivaragu (idu i = 0; i < 10; i++) {
 }
 
 current = head;
-allitanka (current.next !== null) {
-    macha.helu(current.data);
+macha.helu("[ ");
+allitanka (current.next !== khali) {
+    macha.helu(current.data + " ,");
     current = current.next;
 }
+macha.helu(" ]");

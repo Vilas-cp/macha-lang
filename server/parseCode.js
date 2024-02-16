@@ -58,22 +58,30 @@ async function parseMachaLangCode(code) {
         let codeLine = code.slice(prevPoint, i);
         prevPoint = i + 1;
         spiltArray4.push(codeLine);
-        logs = logs + "'" + codeLine.replace(/'/g, "\"") + "',\n";
+        if (codeLine.match('"')) {
+          console.log("In");
+        }
+        console.log(codeLine);
+        logs =
+          logs +
+          "'" +
+          codeLine.replace(/'/g, '"').replace(/\\'/g, '"') +
+          "',\n";
       }
     }
     spiltArray4.push(code.slice(prevPoint, code.length));
+    logs =
+      logs +
+      "'" +
+      code
+        .slice(prevPoint, code.length - 1)
+        .replace(/'/g, '"')
+        .replace(/\\'/g, '"') +
+      "',\n";
     logs = logs + "]" + "\n\n";
     const spiltArray2 = [];
 
-    // for (let index = 0; index < spiltArray4.length; index++) {
-    //   let element = spiltArray4[index].code;
-    //   element = element.replace(/\n/g, "");
-    //   if (element === "") {
-    //     continue;
-    //   }
-    //   spiltArray4[index].code = element;
-    // }
-
+    logs = logs + "Code String:\n";
     for (let index = 0; index < spiltArray4.length; index++) {
       let element = spiltArray4[index];
       logs = logs + element + "\n";
@@ -87,8 +95,8 @@ async function parseMachaLangCode(code) {
       if (element.match("irlli") !== null) {
         element = element.replace(/irlli/g, "const");
       }
-      if (element.match("macha.helu") !== null) {
-        element = element.replace(/macha.helu/g, "console.log");
+      if (element.match(/macha\.helu\(/) !== null) {
+        element = element.replace(/macha\.helu\(/g, "process.stdout.write(''+");
       }
       if (element.match("enandre") !== null) {
         element = element.replace(/enandre/g, "if");
@@ -114,8 +122,8 @@ async function parseMachaLangCode(code) {
       if (element.match("tapu") !== null) {
         element = element.replace(/tapu/g, "false");
       }
-      if (element.match("kalli") !== null) {
-        element = element.replace(/kalli/g, "null");
+      if (element.match("khali") !== null) {
+        element = element.replace(/khali/g, "null");
       }
       if (element.match("enuilla") !== null) {
         element = element.replace(/enuilla/g, "undefined");
@@ -123,7 +131,6 @@ async function parseMachaLangCode(code) {
       if (element.match("mundehogu") !== null) {
         element = element.replace(/mundehogu/g, "continue");
       }
-       
 
       spiltArray2.push(element);
     }
@@ -152,7 +159,7 @@ function reverseCode(code) {
   code = code.replace(/for/g, "allivaragu");
   code = code.replace(/let/g, "idu");
   code = code.replace(/const/g, "irlli");
-  code = code.replace(/console.log/g, "macha.helu");
+  code = code.replace(/process\.stdout\.write\(''\+/g, "macha.helu(");
   code = code.replace(/else if/g, "illandre");
   code = code.replace(/else/g, "illava");
   code = code.replace(/if/g, "enandre");
@@ -161,7 +168,7 @@ function reverseCode(code) {
   code = code.replace(/return/g, "kodu");
   code = code.replace(/true/g, "sari");
   code = code.replace(/false/g, "tapu");
-  code = code.replace(/null/g, "kalli");
+  code = code.replace(/null/g, "khali");
   code = code.replace(/undefined/g, "enuilla");
   code = code.replace(/continue/g, "mundehogu");
   code = code.replace("Node.js v20.11.0", "ಮಚ್ಚLang v1.0.2");
@@ -177,6 +184,8 @@ async function runCompiledCode(logs) {
       console.log(stderr);
       return stderr;
     } else {
+      logs = logs + "\nOutput of Code: \n" + stdout;
+      logWriting(logs);
       return { result: stdout, statusCode: null };
       /*
       await exec("rollup -c");
