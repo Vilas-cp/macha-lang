@@ -10,23 +10,108 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
+import { loader } from "@monaco-editor/react";
+import { languages, editor } from "monaco-editor";
 import React, { useEffect, useRef, useState } from "react";
 import Langselector from "./Langselector";
 import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
 import { executecode } from "../api";
 
+loader.config({ monaco });
+// Register a new language
+function registerLang() {
+  monaco.languages.register({ id: "mySpecialLanguage" });
+
+  // Register a tokens provider for the language
+  monaco.languages.setMonarchTokensProvider("mySpecialLanguage", {
+    tokenizer: {
+      root: [
+        [/irlli/, "keyword-declartion"],
+        [/idu/, "custom-notice"],
+        [/kelsa/, "custom-info"],
+        [/khali/, "custom-date"],
+      ],
+    },
+  });
+
+  // Define a new theme that contains only rules that match this language
+  monaco.editor.defineTheme("myCoolTheme", {
+    base: "vs",
+    inherit: false,
+    rules: [
+      { token: "keyword-declartion", foreground: "0033cc" },
+      { token: "custom-error", foreground: "ff0000", fontStyle: "bold" },
+      { token: "custom-notice", foreground: "FFA500" },
+      { token: "custom-date", foreground: "008800" },
+    ],
+    colors: {
+      "editor.foreground": "#000000",
+    },
+  });
+
+  // Register a completion item provider for the new language
+  monaco.languages.registerCompletionItemProvider("mySpecialLanguage", {
+    provideCompletionItems: (model, position) => {
+      var word = model.getWordUntilPosition(position);
+      var range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+      var suggestions = [
+        {
+          label: "simpleText",
+          kind: monaco.languages.CompletionItemKind.Text,
+          insertText: "simpleText",
+          range: range,
+        },
+        {
+          label: "testing",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: "testing(${1:condition})",
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          range: range,
+        },
+        {
+          label: "ifelse",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: [
+            "if (${1:condition}) {",
+            "\t$0",
+            "} else {",
+            "\t",
+            "}",
+          ].join("\n"),
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          documentation: "If-Else Statement",
+          range: range,
+        },
+      ];
+      return { suggestions: suggestions };
+    },
+  });
+}
+// console.log(languages);
+
+registerLang();
+
 function Codeeditor({ inCode }) {
   const editorRef = useRef();
 
   const [value, setValue] = useState("");
-  const [language, setLanguage] = useState("index.macha");
+  const [language, setLanguage] = useState("mySpecialLanguage");
   const [def, setdef] = useState("machalang");
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
 
   const toast = useToast();
+
   const runCode = async () => {
     const sourcecode = editorRef.current.getValue();
     if (!sourcecode) return;
@@ -68,8 +153,22 @@ function Codeeditor({ inCode }) {
     }
   }, [inCode]);
 
+  useEffect(() => {
+    if (window !== undefined) {
+      console.log("Hello");
+      console.log(editor);
+      console.log(editor.create);
+      // monaco.editor.create(window.document.getElementById("containerEditor"), {
+      //   theme: "myCoolTheme",
+      //   value: CODE_SNIPPETS[def],
+      //   language: "mySpecialLanguage",
+      // });
+    }
+  }, []);
+
   return (
     <>
+      {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
       <div className=" flex top-0 w-full space-x-16  items-center text-center h-20 mt-[-55px] ml-[-30px]">
         <img src="macha.jpg" height={80} width={80} />
 
@@ -80,7 +179,7 @@ function Codeeditor({ inCode }) {
       <HStack gap={0}>
         <Box w="50%" mt={4} ml={-30}>
           <div className="block">
-            <Langselector language={language} onSelect={onSelect} />
+            <Langselector language={"mySpecialLanguage"} onSelect={onSelect} />
             <Button
               variant="outline"
               bg="green.300"
@@ -94,8 +193,8 @@ function Codeeditor({ inCode }) {
           </div>
           <Editor
             height="100vh"
-            theme="vs-light"
-            defaultLanguage={language}
+            theme="myCoolTheme"
+            defaultLanguage={"mySpecialLanguage"}
             defaultValue={CODE_SNIPPETS[def]}
             value={value}
             className="-mt-5"
