@@ -22,16 +22,37 @@ import { executecode } from "../api";
 loader.config({ monaco });
 // Register a new language
 function registerLang() {
+  let some = 10;
+  const somenew = 20;
+  console.log(some + somenew);
   monaco.languages.register({ id: "mySpecialLanguage" });
 
   // Register a tokens provider for the language
   monaco.languages.setMonarchTokensProvider("mySpecialLanguage", {
     tokenizer: {
       root: [
-        [/irlli/, "keyword-declartion"],
-        [/idu/, "custom-notice"],
-        [/kelsa/, "custom-info"],
-        [/khali/, "custom-date"],
+        [/".*"/, "string-matching"],
+        [/'.*'/, "string-matching"],
+        [/`[^`]*`/g, "string-matching"],
+        [/[0-9]/, "number-matching"],
+        [/\/\/.*/, "comment-matching"],
+        [/macha\.helu/, "keyword-declartion-3"],
+        [/[\(\)\[\]\{\}]/, "keyword-declartion-1"],
+        [/irlli/, "keyword-declartion-1"],
+        [/idu/, "keyword-declartion-1"],
+        [/kelsa/, "keyword-declartion-1"],
+        [/sari/, "keyword-declartion-1"],
+        [/tapu/, "keyword-declartion-1"],
+        [/khali/, "keyword-declartion-1"],
+        [/enuilla/, "keyword-declartion-1"],
+        [/mundehogu"/, "keyword-declartion-2"],
+        [/muri/, "keyword-declartion-2"],
+        [/kodu/, "keyword-declartion-2"],
+        [/enandre/, "keyword-declartion-2"],
+        [/illandre/, "keyword-declartion-2"],
+        [/illava/, "keyword-declartion-2"],
+        [/allivaragu/, "keyword-declartion-2"],
+        [/allitanka/, "keyword-declartion-2"],
       ],
     },
   });
@@ -41,10 +62,17 @@ function registerLang() {
     base: "vs",
     inherit: false,
     rules: [
-      { token: "keyword-declartion", foreground: "0033cc" },
-      { token: "custom-error", foreground: "ff0000", fontStyle: "bold" },
-      { token: "custom-notice", foreground: "FFA500" },
-      { token: "custom-date", foreground: "008800" },
+      {
+        token: "keyword-declartion-1",
+        foreground: "0000cd",
+        fontStyle: "bold",
+      },
+      { token: "keyword-declartion-2", foreground: "ff00ff" },
+      { token: "keyword-declartion-3", foreground: "cc6600" },
+      { token: "keyword-declartion-4", foreground: "004080" },
+      { token: "number-matching", foreground: "33cc33" },
+      { token: "string-matching", foreground: "ff5050" },
+      { token: "comment-matching", foreground: "1f7a1f" },
     ],
     colors: {
       "editor.foreground": "#000000",

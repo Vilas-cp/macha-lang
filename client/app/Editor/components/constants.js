@@ -68,7 +68,7 @@ kelsa postorderTreeTraversal(headNode) {
     }
 }
 
-macha.helu("This is a program that convert Array to Binary Tree: \n");
+macha.helu("This is a program that convert Array to Binary Tree: \\n");
 irlli someNum = [50,80,20,15,90,40,30,10];
 irlli n = 8;
 
@@ -76,20 +76,18 @@ allivaragu (idu i = 0; i < n; i++) {
     nodeInsertMadu(head, someNum[i]);
 }
 
-macha.helu("Data has been Inserted!!\n");
+macha.helu("Data has been Inserted!!\\n");
 macha.helu("InOrder Traversal: ");
 macha.helu("[ ");
 inorderTreeTraversal(head);
-macha.helu(" ]\n");
+macha.helu(" ]\\n");
 macha.helu("PreOrder Traversal: ");
 macha.helu("[ ");
 preorderTreeTraversal(head);
-macha.helu(" ]\n");
+macha.helu(" ]\\n");
 macha.helu("PostOrder Traversal: ");
 macha.helu("[ ");
 postorderTreeTraversal(head);
-macha.helu(" ]\n");
-
-`,
+macha.helu(" ]\\n");`,
 
 }
