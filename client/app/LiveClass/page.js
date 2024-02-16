@@ -4,11 +4,19 @@ import firebase from "firebase/compat/app";
 import { collection, addDoc } from "firebase/compat/firestore";
 import { Head } from "next/document";
 import { useEffect, useState, useRef } from "react";
+const servers = {
+  iceServers: [
+    {
+      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
+    },
+  ],
+  iceCandidatePoolSize: 10,
+};
 
 export default function Home() {
   let [localStream, setLocalStream] = useState(null);
   let [remoteStream, setRemoteStream] = useState(null);
-  let [pc, setPC] = useState(new RTCPeerConnection());
+  let [pc, setPC] = useState(null);
 
   const webcamVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -40,24 +48,12 @@ export default function Home() {
       firebase.initializeApp(firebaseConfig);
     }
     firestore.current = firebase.firestore();
-    const peerConnection = new RTCPeerConnection();
+    const peerConnection = new RTCPeerConnection(servers);
     setPC(peerConnection);
 
     //setwebcam(webcamVideoRef.current);
     //setremotecam(remoteVideoRef.current);
   }, []);
-
-  const servers = {
-    iceServers: [
-      {
-        urls: [
-          "stun:stun1.l.google.com:19302",
-          "stun:stun2.l.google.com:19302",
-        ],
-      },
-    ],
-    iceCandidatePoolSize: 10,
-  };
 
   // HTML elements
 
@@ -69,28 +65,31 @@ export default function Home() {
       audio: true,
     });
     setLocalStream(localStream);
-    setRemoteStream(new MediaStream());
-  
+    const remoteMediaStream = new MediaStream();
+    webcamVideoRef.current.srcObject = localStream;
+    remoteVideoRef.current.srcObject = remoteMediaStream;
+    console.log(remoteVideoRef.current.srcObject);
+    setRemoteStream(remoteMediaStream);
+
     // Push tracks from local stream to peer connection
     localStream.getTracks().forEach((track) => {
       pc.addTrack(track, localStream);
     });
-  
+
     // Pull tracks from remote stream, add to video stream
     pc.ontrack = (event) => {
+      console.log(event);
       event.streams[0].getTracks().forEach((track) => {
-        remoteStream.addTrack(track);
+        console.log(remoteStream);
+        console.log(remoteVideoRef.current.srcObject);
+        remoteVideoRef.current.srcObject.addTrack(track);
       });
     };
-  
-    webcamVideoRef.current.srcObject = localStream;
-    remoteVideoRef.current.srcObject = remoteStream;
-  
+
     setCallButtonDisabled(false);
     setAnswerButtonDisabled(false);
     setWebcamButtonDisabled(true);
   };
-  
 
   // 2. Create an offer
   let handleCallButtonClick = async () => {
@@ -139,35 +138,36 @@ export default function Home() {
     setHangupButtonDisabled(false);
   };
 
- 
-// 3. Answer the call with the unique ID
-// 3. Answer the call with the unique ID
-let handleAnswerButtonClick = async () => {
+  // 3. Answer the call with the unique ID
+  // 3. Answer the call with the unique ID
+  let handleAnswerButtonClick = async () => {
     const callId = callInputValue;
-    const callDoc = firestore.current.collection("calls").doc(callId.toString());
+    const callDoc = firestore.current
+      .collection("calls")
+      .doc(callId.toString());
     const answerCandidates = callDoc.collection("answerCandidates");
     const offerCandidates = callDoc.collection("offerCandidates");
-  
+
     pc.onicecandidate = (event) => {
       event.candidate && answerCandidates.add(event.candidate.toJSON());
     };
-  
+
     const callData = (await callDoc.get()).data();
-  
+
     const offerDescription = callData?.offer;
     const remoteDescription = new RTCSessionDescription(offerDescription);
     await pc.setRemoteDescription(remoteDescription);
-  
+
     const answerDescription = await pc.createAnswer();
     await pc.setLocalDescription(answerDescription);
-  
+
     const answer = {
       sdp: answerDescription.sdp,
       type: answerDescription.type,
     };
-  
+
     await callDoc.update({ answer });
-  
+
     offerCandidates.onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
         console.log(change);
@@ -178,10 +178,6 @@ let handleAnswerButtonClick = async () => {
       });
     });
   };
-  
-  
-
-  
 
   return (
     <div>
