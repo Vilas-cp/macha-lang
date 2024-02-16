@@ -68,8 +68,8 @@ export default function Home() {
     const remoteMediaStream = new MediaStream();
     webcamVideoRef.current.srcObject = localStream;
     remoteVideoRef.current.srcObject = remoteMediaStream;
-    console.log(remoteVideoRef.current.srcObject);
     setRemoteStream(remoteMediaStream);
+    console.log(localStream);
 
     // Push tracks from local stream to peer connection
     localStream.getTracks().forEach((track) => {
@@ -78,11 +78,11 @@ export default function Home() {
 
     // Pull tracks from remote stream, add to video stream
     pc.ontrack = (event) => {
-      console.log(event);
       event.streams[0].getTracks().forEach((track) => {
-        console.log(remoteStream);
-        console.log(remoteVideoRef.current.srcObject);
+        if (remoteVideoRef.current.srcObject.getTracks().length <= 1) {
+        console.log(remoteVideoRef.current.srcObject.getTracks());
         remoteVideoRef.current.srcObject.addTrack(track);
+        }
       });
     };
 
@@ -198,7 +198,7 @@ export default function Home() {
             <h3>Remote Stream</h3>
             <video
               ref={remoteVideoRef}
-              autoplay
+              autoPlay
               playsinline
               className="w-40vw h-30vw m-8 bg-blue-800"
             ></video>
