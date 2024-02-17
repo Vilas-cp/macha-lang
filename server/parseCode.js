@@ -128,6 +128,9 @@ async function parseMachaLangCode(code) {
       if (element.match("mundehogu") !== null) {
         element = element.replace(/mundehogu/g, "continue");
       }
+      if (element.match("muri") !== null) {
+        element = element.replace(/muri/g, "break");
+      }
 
       spiltArray2.push(element);
     }
@@ -257,6 +260,12 @@ function reverseCode(code) {
     spacing =
       spacing + " ".repeat(Math.abs("continue".length - "mundehogu".length));
     negaOrPost = negaOrPost + ("continue".length - "mundehogu".length) * -1;
+  }
+  if (code.match(/break/) !== null) {
+    code = code.replace(/break/g, "muri");
+    spacing =
+      spacing + " ".repeat(Math.abs("break".length - "muri".length));
+    negaOrPost = negaOrPost + ("break".length - "muri".length) * -1;
   }
 
   if (negaOrPost === 0) {
