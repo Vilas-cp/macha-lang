@@ -1,9 +1,10 @@
 "use client";
 import Header from "@/components/Header";
 import firebase from "firebase/compat/app";
-import { collection, addDoc } from "firebase/compat/firestore";
-import { Head } from "next/document";
 import { useEffect, useState, useRef } from "react";
+import "firebase/compat/firestore";
+import {Input} from "@nextui-org/react";
+
 const servers = {
   iceServers: [
     {
@@ -85,7 +86,7 @@ export default function Home() {
         }
       });
     };
-
+    webcamVideoRef.muted = true;
     setCallButtonDisabled(false);
     setAnswerButtonDisabled(false);
     setWebcamButtonDisabled(true);
@@ -138,7 +139,7 @@ export default function Home() {
     setHangupButtonDisabled(false);
   };
 
-  // 3. Answer the call with the unique ID
+  
   // 3. Answer the call with the unique ID
   let handleAnswerButtonClick = async () => {
     const callId = callInputValue;
@@ -182,70 +183,76 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="antialiased text-center text-gray-700 pt-[80px] mx-4 ">
-        <h2>1. Start your Webcam</h2>
+      <div className="antialiased text-center text-gray-700 pt-[80px]  ">
+        <h2 className=" font-bold text-[50px]">ONLINE TUTORING</h2>
         <div className="flex items-center justify-center flex-row">
           <span>
-            <h3>Local Stream</h3>
+            
             <video
               ref={webcamVideoRef}
-              className="w-[40vw] h-[30vw] m-8 bg-blue-700"
+              className="w-[40vw] h-[30vw] m-8 bg-gray-900"
               autoPlay
               playsInline
             ></video>
           </span>
           <span>
-            <h3>Remote Stream</h3>
+            
             <video
               ref={remoteVideoRef}
               autoPlay
               playsInline
-              className="w-[40vw] h-[30vw] m-8 bg-blue-800"
+              className="w-[40vw] h-[30vw] m-8 bg-gray-900"
             ></video>
           </span>
         </div>
 
         <button
           onClick={handleWebcamButtonClick}
-          className="bg-cyan-700"
+          className="bg-[#0070f0] w-[180px] h-[40px] rounded-xl block ml-[140px]"
           disabled={webcamButtonDisabled}
+          color="primary"
+          
         >
-          Start webcam
+         <p className="text-white font-semibold" > Start Webcam</p>
         </button>
-        <h2>2. Create a new Call</h2>
+        <div className="flex justify-center items-center">
+        <h2 className="inline-block font-semibold text-[30px] pr-[10px] ">Ask others to Join:</h2>
         <button
           onClick={handleCallButtonClick}
           disabled={callButtonDisabled}
-          className="bg-red-700"
+          className="bg-[#9455d3] w-[180px] h-[40px] rounded-xl "
+          
         >
-          Create Call (offer)
+          <p className="text-white font-semibold">Ask for class</p>
         </button>
-
-        <h2>3. Join a Call</h2>
-        <p>Answer the call from a different browser window or device</p>
-
+        </div>
+        <h2 className="mb-[4px] font-semibold">or</h2>
+        
+        <div className="flex gap-[20px] justify-center">
         <input
           id="callInput"
           value={callInputValue}
           onChange={handleCallInputChange}
-          className="bg-gray-200 rounded-l text-black"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[400px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+          placeholder="online-class-id"
         />
+      
         <button
           onClick={handleAnswerButtonClick}
           disabled={answerButtonDisabled}
-          className="bg-yellow-300"
-        >
-          Answer
-        </button>
+          className="bg-[#0070f0] w-[200px] rounded-xl"
 
-        <h2>4. Hangup</h2>
+        >
+         <p className="text-white font-semibold"> Join class</p> 
+        </button>
+        </div>
 
         <button
           id="hangupButton"
           disabled={hangupButtonDisabled}
-          className="bg-green-600"
+          className="rounded-full pt-[20px]"
         >
-          Hangup
+          <img src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png" width={50}/>
         </button>
       </div>
     </div>

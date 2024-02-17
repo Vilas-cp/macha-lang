@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <header className="lg:fixed lg:flex-none bg-white lg:h-[60px] lg:w-full lg:z-10 lg:shadow-2xl lg:px-9  fixed">
+    <header className="lg:fixed lg:flex-none bg-white lg:h-[60px] lg:w-full lg:z-10 lg:shadow-2xl lg:px-9  fixed ">
       <nav className="flex justify-between items-center p-4">
         <div className="flex justify-between items-center whitespace-pre-wrap break-words ">
           <div className="font-extrabold text-2xl" onClick={handleConfetti}>ಮಚ್ಚಾ ಲ್ಯಾಂಗ್</div>

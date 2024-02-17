@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@monaco-editor/react": "^4.6.0",
+    "@nextui-org/input": "^2.1.16",
     "@nextui-org/react": "^2.2.9",
     "axios": "^1.6.7",
     "firebase": "^10.8.0",
