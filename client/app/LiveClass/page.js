@@ -2,7 +2,6 @@
 import Header from "@/components/Header";
 import firebase from "firebase/compat/app";
 import { collection, addDoc } from "firebase/compat/firestore";
-import { Head } from "next/document";
 import { useEffect, useState, useRef } from "react";
 const servers = {
   iceServers: [

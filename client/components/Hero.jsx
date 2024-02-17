@@ -19,9 +19,9 @@ const Hero = () => {
   "https://images.livemint.com/rf/Image-621x414/LiveMint/Period1/2015/02/09/Photos/schoolinternet-kejB--621x414@LiveMint.jpg",
   "https://dtnext-prod.s3.ap-south-1.amazonaws.com/imported/import/Articles/2021/Mar/202103012321191832_Computerbased-test-likely-for-classes-911-in-schools_SECVPF.gif",
   "https://images.edexlive.com/uploads/user/imagelibrary/2022/11/8/original/13BG01_14-07-2012_20_0_2_11543236.jpg",
-  "https://www.gmhs40a.in/wp-content/uploads/2022/04/DSC_5220.jpg"].map((i) => {
+  "https://www.gmhs40a.in/wp-content/uploads/2022/04/DSC_5220.jpg"].map((i, index) => {
     return <SwiperSlide>
-     <img src={i} alt="" width={550} />    
+     <img key={index} src={i} alt="" width={550} />    
     </SwiperSlide>;
   })
     return (
