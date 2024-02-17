@@ -8,7 +8,7 @@ import text from "./data";
 export default function Home() {
   const router = useRouter();
   let data = text.map((item) => (
-    <div className=" h-full w-full hover:hover:bg-[#04AA6D] hover:cursor-pointer">
+    <div className=" lg:h-full lg:w-full h-20 w-full hover:bg-[#04AA6D] active:bg-[#04AA6D] hover:cursor-pointer hidden lg:flex">
       <div className="flex justify-center pt-2 items-center "> {item.Name}</div>
     </div>
   ));
@@ -53,8 +53,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="text-l bg-[#ffffcc] p-5 w-[100vh] h-[30vh]">
-        <span className="font-semi text-3xl">Note:</span>
+      <div className=" bg-[#ffffcc] p-5 lg:w-[100vh] h-[40vh]">
+        <span className="font-semi text-3xl pb-2">Note:</span>
         <br></br>
         {items.Type}
       </div>
@@ -82,7 +82,7 @@ export default function Home() {
     <div>
       <Header />
       <div
-        className=" pt-[60px] bg-[#282A35!important] text-white  h-[100px]
+        className=" pt-[60px] lg:bg-[#282A35] text-white  h-[100px]
       items-center flex flex-row justify-between  py-0 fixed  w-full"
       >
         {data}

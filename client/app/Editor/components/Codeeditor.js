@@ -9,6 +9,7 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import { useBreakpointValue } from "@chakra-ui/react"
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import { loader } from "@monaco-editor/react";
@@ -24,6 +25,7 @@ loader.config({ monaco });
 function registerLang() {
   let some = 10;
   const somenew = 20;
+
   console.log(some + somenew);
   monaco.languages.register({ id: "MACHALang" });
 
@@ -76,7 +78,11 @@ function registerLang() {
     ],
     colors: {
       "editor.foreground": "#000000",
+      // "editor.background": "#1c2130"
     },
+    scrollbar:{
+
+    }
   });
 
   // Register a completion item provider for the new language
@@ -137,6 +143,9 @@ function Codeeditor({ inCode }) {
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isLargerThan1024 = useBreakpointValue({ base: false, lg: true });
+
 
   const toast = useToast();
 
@@ -174,6 +183,9 @@ function Codeeditor({ inCode }) {
     editorRef.current = editor;
     editor.focus();
   };
+  const DarkMode = () => {
+    setIsDarkMode(!isDarkMode); // Toggle between modes
+  };
 
   useEffect(() => {
     if (inCode) {
@@ -204,7 +216,9 @@ function Codeeditor({ inCode }) {
           ಮಚ್ಚ Lang compiler
         </Text>
       </div>
-      <HStack gap={0}>
+      {
+        isLargerThan1024?
+      <HStack spacing={0} >
         <Box w="50%" mt={4} ml={-30}>
           <div className="block">
             <Langselector language={"MACHALang"} onSelect={onSelect} />
@@ -213,10 +227,34 @@ function Codeeditor({ inCode }) {
               bg="green.300"
               mb={29}
               float={"right"}
+              mr={4}
               onClick={runCode}
               isLoading={isLoading}
             >
               Run code
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mb={29}
+              float={"right"}
+          mr={6}
+            >
+           Save
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mr={6}
+              mb={29}
+              float={"right"}
+              onClick={DarkMode}
+         
+          
+            >
+      {isDarkMode ? "Light" : "Dark"}
             </Button>
           </div>
           <Editor
@@ -226,6 +264,7 @@ function Codeeditor({ inCode }) {
             defaultValue={CODE_SNIPPETS[def]}
             value={value}
             className="-mt-5"
+    
             line={0}
             options={{ minimap: { enabled: false } }}
             onMount={onMount}
@@ -233,7 +272,69 @@ function Codeeditor({ inCode }) {
           />
         </Box>
         <OutputTerminal output={output} language={def} />
-      </HStack>
+      </HStack>:
+      <div>
+
+      <HStack spacing={0}  css={{
+    flexDirection:"column",
+    }}>
+        <Box w="100%" mt={4} ml={-30}> 
+          <div className="block">
+            <Langselector language={"MACHALang"} onSelect={onSelect} />
+            <Button
+              variant="outline"
+              bg="green.300"
+              mb={29}
+              float={"right"}
+              mr={4}
+              onClick={runCode}
+              isLoading={isLoading}
+            >
+              Run code
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mb={29}
+              float={"right"}
+          mr={6}
+            >
+           Save
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mr={6}
+              mb={29}
+              float={"right"}
+              onClick={DarkMode}
+         
+          
+            >
+      {isDarkMode ? "Light" : "Dark"}
+            </Button>
+          </div>
+          <Editor
+          
+            theme="MACHALangTheme"
+            defaultLanguage={"MACHALang"}
+            defaultValue={CODE_SNIPPETS[def]}
+            value={value}
+            className="-mt-5 min-h-96"
+    
+            line={0}
+            options={{ minimap: { enabled: false } }}
+            onMount={onMount}
+            onChange={(value) => setValue(value)}
+          />
+        </Box>
+        <OutputTerminal output={output} language={def} />
+      </HStack>:
+    
+            
+        </div>}
     </>
   );
 }
