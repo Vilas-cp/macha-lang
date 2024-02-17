@@ -61,7 +61,7 @@ const Hero = () => {
         <div className="font-semibold text-[30px] pt-2">Example</div>
         <div className="bg-white font-mono font-semi ">
         <span>
-        <br/>idu a = 10;<br/>idu b = 15;<br/>
+        <br/>{'idu a = 10;'}<br/>{'idu b = 15;'}<br/>
         </span>
         </div>
         <div className="bg-[#04AA6D!important] w-[150px] h-[5vh] flex items-center justify-center rounded-lg font-semibold text-white">Try it yourself -&gt;</div>
