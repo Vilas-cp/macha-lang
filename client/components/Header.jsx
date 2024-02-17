@@ -1,14 +1,26 @@
 "use client";
 import React from "react";
 import { useRouter, redirect } from "next/navigation";
+import { Button } from '@nextui-org/react';
+import confetti from 'canvas-confetti';
+
+
 
 const Header = () => {
   let router = useRouter();
+  const handleConfetti = () => {
+    confetti();
+  };
+
   return (
     <header className="fixed bg-white h-[60px] w-full z-10 shadow-2xl px-9">
       <nav className="flex justify-between items-center p-4">
         <div className="flex justify-between items-center">
-          <div className="font-extrabold text-2xl">ಮಚ್ಚಾ ಲ್ಯಾಂಗ್</div>
+          <div className="font-extrabold text-2xl hover:cursor-pointer" onClick={handleConfetti}>
+
+            ಮಚ್ಚಾ ಲ್ಯಾಂಗ್
+
+          </div>
           <div className="flex justify-between pl-[50px] gap-[40px]">
             <div
               onClick={() => router.push("/")}
@@ -30,6 +42,12 @@ const Header = () => {
               className="cursor-pointer"
             >
               About us
+            </div>
+            <div
+              onClick={() => router.push("AdvancePrograms")}
+              className="cursor-pointer"
+            >
+              Advance programs
             </div>
             <div
               onClick={() => router.push("LiveClass")}

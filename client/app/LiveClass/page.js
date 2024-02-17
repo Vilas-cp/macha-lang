@@ -189,7 +189,7 @@ export default function Home() {
             <h3>Local Stream</h3>
             <video
               ref={webcamVideoRef}
-              className="w-40vw h-30vw m-8 bg-blue-700"
+              className="w-[40vw] h-[30vw] m-8 bg-blue-700"
               autoPlay
               playsInline
             ></video>
@@ -200,7 +200,7 @@ export default function Home() {
               ref={remoteVideoRef}
               autoPlay
               playsInline
-              className="w-40vw h-30vw m-8 bg-blue-800"
+              className="w-[40vw] h-[30vw] m-8 bg-blue-800"
             ></video>
           </span>
         </div>
