@@ -54,7 +54,7 @@ const Hero = () => {
             <div>
                 <div className='lg:text-[60px] text-[40px] font-bold pb-4'>About lang</div>
         <div className='text-xl font-semibold'>The language for kannadigas</div>
-        <div>"code in your regional language"</div>
+        <div>{`"code in your regional language"`}</div>
         </div>
     <div className="flex justify-center lg:w-[400px] w-64 mr-4 lg:mr-1">
       <div className="bg-[#E7E9EB] flex flex-col pl-6 gap-[15px] pb-3 w-[100vh] pr-6 shadow-2xl ">
