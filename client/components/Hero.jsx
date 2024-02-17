@@ -88,7 +88,7 @@ const Hero = () => {
             {result}
           </Swiper>
           <div className='font-semi w-[800px] pr-[100px] text-xl'>
-          Rural schools may lack adequate English language learning materials such as textbooks,
+          {`Rural schools may lack adequate English language learning materials such as textbooks,
            workbooks, and audiovisual aids. Without these resources,
            children may struggle to develop their English language skills effectively. 
            Rural areas often experience shortages of qualified English language teachers. As a result, children may not receive the necessary 
@@ -98,7 +98,7 @@ const Hero = () => {
            This lack of exposure can hinder children's language acquisition and fluency.
            In some rural communities, there may be a stronger emphasis on local languages or 
            dialects, with less importance placed on learning English. Cultural attitudes towards English learning may vary, and some 
-           families may not prioritize investing time and resources in English language education.
+           families may not prioritize investing time and resources in English language education.`}
           </div>
         </div>
 
