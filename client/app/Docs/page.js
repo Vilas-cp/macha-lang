@@ -8,12 +8,12 @@ import text from "./data";
 export default function Home() {
   const router = useRouter();
   let data = text.map((item) => (
-    <div className=" lg:h-full lg:w-full h-20 w-full hover:bg-[#04AA6D] active:bg-[#04AA6D] hover:cursor-pointer hidden lg:flex">
+    <div key={item.Name} className=" lg:h-full lg:w-full h-20 w-full hover:bg-[#04AA6D] active:bg-[#04AA6D] hover:cursor-pointer hidden lg:flex">
       <div className="flex justify-center pt-2 items-center "> {item.Name}</div>
     </div>
   ));
   let dataset = text.map((items) => (
-    <div className="p-[20px] flex flex-col gap-[30px] ">
+    <div key={items.Name} className="p-[20px] flex flex-col gap-[30px] ">
       <div className="text-[50px] font-mono font-bold bg-green-500 h-[70px] w-fit">
         {items.Name}
       </div>

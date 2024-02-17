@@ -19,8 +19,8 @@ const Hero = () => {
   "https://images.livemint.com/rf/Image-621x414/LiveMint/Period1/2015/02/09/Photos/schoolinternet-kejB--621x414@LiveMint.jpg",
   "https://dtnext-prod.s3.ap-south-1.amazonaws.com/imported/import/Articles/2021/Mar/202103012321191832_Computerbased-test-likely-for-classes-911-in-schools_SECVPF.gif",
   "https://images.edexlive.com/uploads/user/imagelibrary/2022/11/8/original/13BG01_14-07-2012_20_0_2_11543236.jpg",
-  "https://www.gmhs40a.in/wp-content/uploads/2022/04/DSC_5220.jpg"].map((i) => {
-    return <SwiperSlide>
+  "https://www.gmhs40a.in/wp-content/uploads/2022/04/DSC_5220.jpg"].map((i, index) => {
+    return <SwiperSlide key={index}>
      <img src={i} alt="" width={550} />    
     </SwiperSlide>;
   })
@@ -54,14 +54,14 @@ const Hero = () => {
             <div>
                 <div className='lg:text-[60px] text-[40px] font-bold pb-4'>About lang</div>
         <div className='text-xl font-semibold'>The language for kannadigas</div>
-        <div>"code in your regional language"</div>
+        <div>{`"code in your regional language"`}</div>
         </div>
     <div className="flex justify-center lg:w-[400px] w-64 mr-4 lg:mr-1">
       <div className="bg-[#E7E9EB] flex flex-col pl-6 gap-[15px] pb-3 w-[100vh] pr-6 shadow-2xl ">
         <div className="font-semibold text-[30px] pt-2">Example</div>
         <div className="bg-white font-mono font-semi ">
         <span>
-        <br/>idu a = 10;<br/>idu b = 15;<br/>
+        <br/>{'idu a = 10;'}<br/>{'idu b = 15;'}<br/>
         </span>
         </div>
         <div className="bg-[#04AA6D!important] w-[150px] h-[5vh] flex items-center justify-center rounded-lg font-semibold text-white">Try it yourself -&gt;</div>
@@ -88,7 +88,7 @@ const Hero = () => {
             {result}
           </Swiper>
           <div className='font-semi w-[800px] pr-[100px] text-xl'>
-          Rural schools may lack adequate English language learning materials such as textbooks,
+          {`Rural schools may lack adequate English language learning materials such as textbooks,
            workbooks, and audiovisual aids. Without these resources,
            children may struggle to develop their English language skills effectively. 
            Rural areas often experience shortages of qualified English language teachers. As a result, children may not receive the necessary 
@@ -98,7 +98,7 @@ const Hero = () => {
            This lack of exposure can hinder children's language acquisition and fluency.
            In some rural communities, there may be a stronger emphasis on local languages or 
            dialects, with less importance placed on learning English. Cultural attitudes towards English learning may vary, and some 
-           families may not prioritize investing time and resources in English language education.
+           families may not prioritize investing time and resources in English language education.`}
           </div>
         </div>
 
