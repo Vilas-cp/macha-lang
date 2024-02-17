@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter, redirect } from "next/navigation";
-
+import confetti from 'canvas-confetti';
 import {  Menu, MenuItem,MenuButton, MenuList, Button, IconButton } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
@@ -15,7 +15,7 @@ const Header = () => {
     <header className="lg:fixed lg:flex-none bg-white lg:h-[60px] lg:w-full lg:z-10 lg:shadow-2xl lg:px-9  fixed">
       <nav className="flex justify-between items-center p-4">
         <div className="flex justify-between items-center whitespace-pre-wrap break-words ">
-          <div className="font-extrabold text-2xl" onClick={() => router.push("/")}>ಮಚ್ಚಾ ಲ್ಯಾಂಗ್</div>
+          <div className="font-extrabold text-2xl" onClick={handleConfetti}>ಮಚ್ಚಾ ಲ್ಯಾಂಗ್</div>
           <div className="flex justify-between pl-[22px] gap-[40px]">
           <div className="lg:hidden  z-50  bg-slate-200 rounded-md p-2  mb-5 mr-2">
             <Menu  >
@@ -30,6 +30,7 @@ const Header = () => {
         <MenuItem onClick={() => router.push("/Editor")}> Code Editor</MenuItem>
         <MenuItem onClick={() => router.push("Aboutus")}> About us</MenuItem>
         <MenuItem onClick={() => router.push("LiveClass")}> Live Class</MenuItem>
+        <MenuItem onClick={() => router.push("AdvancePrograms")}> AdvancePrgrams</MenuItem>
       </MenuList>
     </Menu>
             </div>
@@ -54,6 +55,12 @@ const Header = () => {
               className="cursor-pointer hidden lg:block"
             >
               About us
+            </div>
+            <div
+              onClick={() => router.push("AdvancePrograms")}
+              className="cursor-pointer hidden lg:block"
+            >
+              AdvancePrograms
             </div>
             <div
               onClick={() => router.push("LiveClass")}

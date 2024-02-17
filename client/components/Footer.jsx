@@ -32,7 +32,8 @@ const Footer = () => {
                 Banglore
                 <br></br>
                 +91 9876543210
-                <h1 className='text-xl font-bold'>Contact Us</h1>
+                <br></br>
+                <span className='text-xl font-bold'>Contact Us</span>
                 <br></br>
                 +91 1234567890
                 </p>
