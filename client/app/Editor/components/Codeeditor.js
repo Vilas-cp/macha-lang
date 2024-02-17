@@ -213,10 +213,33 @@ function Codeeditor({ inCode }) {
               bg="green.300"
               mb={29}
               float={"right"}
+              mr={2}
               onClick={runCode}
               isLoading={isLoading}
             >
               Run code
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mb={29}
+              float={"right"}
+          mr={6}
+            >
+           Save
+            </Button>
+            <Button
+              variant="outline"
+              bg="#f5f5f5"
+              color="rgba(37, 38, 94, 0.7)"
+              mr={6}
+              mb={29}
+              float={"right"}
+         
+          
+            >
+         Dark
             </Button>
           </div>
           <Editor

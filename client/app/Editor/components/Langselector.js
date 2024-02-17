@@ -17,7 +17,9 @@ function Langselector({ language, onSelect }) {
     <>
       <Box float={"left"}>
         <Menu>
-          <MenuButton as={Button}>{language}</MenuButton>
+          <MenuButton as={Button} bg="#f5f5f5" color="rgba(37, 38, 94, 0.7)">
+            {language}
+          </MenuButton>
           <MenuList>
             {languages.map(([language, version]) => (
               <MenuItem key={language} onClick={() => onSelect(language)}>
