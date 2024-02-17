@@ -263,8 +263,7 @@ function reverseCode(code) {
   }
   if (code.match(/break/) !== null) {
     code = code.replace(/break/g, "muri");
-    spacing =
-      spacing + " ".repeat(Math.abs("break".length - "muri".length));
+    spacing = spacing + " ".repeat(Math.abs("break".length - "muri".length));
     negaOrPost = negaOrPost + ("break".length - "muri".length) * -1;
   }
 
@@ -288,9 +287,23 @@ async function runCompiledCode(logs) {
       console.log(stderr);
       return stderr;
     } else {
-      logs = logs + "\nOutput of Code: \n" + stdout;
-      logWriting(logs);
-      return { result: stdout, statusCode: null };
+      await exec("rollup -c");
+      const { stdout, stderr } = await exec("node ./build/bundle.js");
+      if (stdout !== null && stdout !== undefined) {
+        logs = logs + "Output of Code: \n" + stdout;
+        logWriting(logs);
+        return { result: stdout, statusCode: null };
+      } else {
+        logs =
+          logs +
+          "Output Compiled Error: \n" +
+          stderr +
+          "\n\n" +
+          "Output Error: \n" +
+          reverseCode(stderr);
+        logWriting(logs);
+        return { result: stderr, statusCode: "error" };
+      }
       /*
       await exec("rollup -c");
       // const { stdout, stderr } = await exec("node ./build/bundle.js");
