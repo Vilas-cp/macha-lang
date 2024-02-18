@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="py-[100px] w-full px-[100px]">
+      <div className="py-[100px] w-full px-[10px] md:px-[100px]">
         <div>
-          <h1 className="text-[60px] font-bold">Linked list</h1>
+          <h1 className="text-[40px] md:text-[60px] font-bold">Linked list</h1>
           <h2 className="pt-[20px]">Properties of Binary Search Tree:</h2>
-
+          <ul>
           <li>All nodes of the left subtree are less than the root node.</li>
           <li>
             All nodes of the right subtree are greater than the root node.
@@ -23,6 +23,7 @@ export default function Home() {
             Both subtrees of each node are also Binary Search Trees i.e. they
             have the above two properties.
           </li>
+          </ul>
         </div>
         <div className="flex justify-center items-center flex-col ">
           <img
@@ -30,7 +31,7 @@ export default function Home() {
             alt=""
             width={1000}
           />
-          <div className="w-[100vh] h-[70vh] overflow-scroll overflow-x-hidden">
+          <div className="w-full lg:w-[100vh] h-[70vh] overflow-scroll overflow-x-hidden">
             <CopyBlock text={text1} theme={dracula} codeBlock />
           </div>
         </div>
@@ -55,7 +56,7 @@ export default function Home() {
             src="https://cdn.programiz.com/sites/tutorial2program/files/bst-delete-8.png"
             alt=""
           />
-          <div className="w-[100vh] h-[70vh] overflow-scroll overflow-x-hidden">
+          <div className="w-full lg:w-[100vh] h-[70vh] overflow-scroll overflow-x-hidden">
             <CopyBlock text={text} theme={dracula} codeBlock />
           </div>
         </div>

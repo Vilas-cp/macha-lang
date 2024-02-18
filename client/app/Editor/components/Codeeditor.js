@@ -19,9 +19,11 @@ import Langselector from "./Langselector";
 import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
 import { executecode } from "../api";
+import { useRouter } from "next/navigation";
 
 loader.config({ monaco });
 // Register a new language
+
 function registerLang() {
   let some = 10;
   const somenew = 20;
@@ -35,7 +37,7 @@ function registerLang() {
       root: [
         [/".*"/, "string-matching"],
         [/'.*'/, "string-matching"],
-        [/`[^`]*`/g, "string-matching"],
+        [/[^]*`/g, "string-matching"],
         [/[0-9]/, "number-matching"],
         [/\/\/.*/, "comment-matching"],
         [/macha\.helu/, "keyword-declartion-3"],
@@ -109,12 +111,12 @@ function registerLang() {
           range: range,
         },
         {
-          label: "ifelse",
+          label: "enandre",
           kind: monaco.languages.CompletionItemKind.Snippet,
           insertText: [
-            "if (${1:condition}) {",
+            "enandre (${1:condition}) {",
             "\t$0",
-            "} else {",
+            "} illandre {",
             "\t",
             "}",
           ].join("\n"),
@@ -127,9 +129,49 @@ function registerLang() {
       return { suggestions: suggestions };
     },
   });
+  const keywords = [
+    "macha.helu",
+    "irlli",
+    "idu",
+    "kelsa",
+    "sari",
+    "tapu",
+    "khali",
+    "enuilla",
+    "mundehogu",
+    "muri",
+    "kodu",
+    "enandre",
+    "illandre",
+    "illava",
+    "allivaragu",
+    "allitanka",
+  ];
+  monaco.languages.registerCompletionItemProvider("MACHALang", {
+    provideCompletionItems: (model, position) => {
+      var word = model.getWordUntilPosition(position);
+      var range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+      const suggestion = [
+        ...keywords.map((k) => {
+          return {
+            label: k,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: k,
+            range: range,
+          };
+        }),
+      ];
+      return { suggestions: suggestion };
+    },
+  });
 }
-// console.log(languages);
 
+// console.log(languages);
 registerLang();
 
 function Codeeditor({ inCode, mlserverapi }) {
@@ -152,6 +194,7 @@ function Codeeditor({ inCode, mlserverapi }) {
     try {
       setisloading(true);
       const result = await executecode(language, sourcecode, mlserverapi);
+      console.log(result);
       setOutput(result.result);
     } catch (error) {
       // Handle error
@@ -189,19 +232,40 @@ function Codeeditor({ inCode, mlserverapi }) {
     }
   }, [inCode]);
 
+  useEffect(() => {
+    if (window !== undefined) {
+      console.log("Hello");
+      console.log(editor);
+      console.log(editor.create);
+      // monaco.editor.create(window.document.getElementById("containerEditor"), {
+      //   theme: "MACHALangTheme",
+      //   value: CODE_SNIPPETS[def],
+      //   language: "MACHALang",
+      // });
+    }
+  }, []);
+  const router = useRouter();
+
   return (
     <>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
       <div className=" flex top-0 w-full space-x-16  items-center text-center h-20 mt-[-55px] ml-[-30px]">
         <img src="macha.jpg" height={80} width={80} />
 
-        <Text mb={2} fontSize="40px" marginTop={10} fontWeight="bold">
+        <Text
+          mb={2}
+          fontSize="40px"
+          marginTop={10}
+          fontWeight="bold"
+          cursor={"pointer"}
+          onClick={() => router.push(".")}
+        >
           ಮಚ್ಚ Lang compiler
         </Text>
       </div>
       {isLargerThan1024 ? (
         <HStack spacing={0}>
-          <Box w="50%" mt={4} ml={-30}>
+          <Box w="50%" mt={4} ml={-30} className="md:w-[50%] w-full">
             <div className="block">
               <Langselector language={"MACHALang"} onSelect={onSelect} />
               <Button
@@ -215,27 +279,31 @@ function Codeeditor({ inCode, mlserverapi }) {
               >
                 Run code
               </Button>
-              <Button
-                variant="outline"
-                bg="#f5f5f5"
-                color="rgba(37, 38, 94, 0.7)"
-                mb={29}
-                float={"right"}
-                mr={6}
-              >
-                Save
-              </Button>
-              <Button
-                variant="outline"
-                bg="#f5f5f5"
-                color="rgba(37, 38, 94, 0.7)"
-                mr={6}
-                mb={29}
-                float={"right"}
-                onClick={DarkMode}
-              >
-                {isDarkMode ? "Light" : "Dark"}
-              </Button>
+              <span className="!hidden md:!block">
+                <Button
+                  
+                  variant="outline"
+                  bg="#f5f5f5"
+                  color="rgba(37, 38, 94, 0.7)"
+                  mb={29}
+                  float={"right"}
+                  mr={6}
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="outline"
+                  bg="#f5f5f5"
+                  color="rgba(37, 38, 94, 0.7)"
+                  mr={6}
+                 
+                  mb={29}
+                  float={"right"}
+                  onClick={DarkMode}
+                >
+                  {isDarkMode ? "Light" : "Dark"}
+                </Button>
+              </span>
             </div>
             <Editor
               height="100vh"
@@ -243,7 +311,7 @@ function Codeeditor({ inCode, mlserverapi }) {
               defaultLanguage={"MACHALang"}
               defaultValue={CODE_SNIPPETS[def]}
               value={value}
-              className="-mt-5"
+              className="-mt-5 40-vh md:100-vh w-full"
               line={0}
               options={{ minimap: { enabled: false } }}
               onMount={onMount}

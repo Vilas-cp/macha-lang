@@ -26,11 +26,11 @@ const Header = () => {
       </MenuButton>
       <MenuList bg="#f5f5f5">
    
-        <MenuItem onClick={() => router.push("Docs")}> Docs</MenuItem>
+        <MenuItem onClick={() => router.push("/Docs")}> Docs</MenuItem>
         <MenuItem onClick={() => router.push("/Editor")}> Code Editor</MenuItem>
-        <MenuItem onClick={() => router.push("Aboutus")}> About us</MenuItem>
-        <MenuItem onClick={() => router.push("LiveClass")}> Live Class</MenuItem>
-        <MenuItem onClick={() => router.push("AdvancePrograms")}> AdvancePrgrams</MenuItem>
+        <MenuItem onClick={() => router.push("/Aboutus")}> About us</MenuItem>
+        <MenuItem onClick={() => router.push("/LiveClass")}> Live Class</MenuItem>
+        <MenuItem onClick={() => router.push("/AdvancePrograms")}> AdvancePrgrams</MenuItem>
       </MenuList>
     </Menu>
             </div>
@@ -51,19 +51,19 @@ const Header = () => {
               Code Editor
             </div>
             <div
-              onClick={() => router.push("Aboutus")}
+              onClick={() => router.push("/Aboutus")}
               className="cursor-pointer hidden lg:block"
             >
               About us
             </div>
             <div
-              onClick={() => router.push("AdvancePrograms")}
+              onClick={() => router.push("/AdvancePrograms")}
               className="cursor-pointer hidden lg:block"
             >
               AdvancePrograms
             </div>
             <div
-              onClick={() => router.push("LiveClass")}
+              onClick={() => router.push("/LiveClass")}
               className="cursor-pointer mt-3 lg:mt-0 "
             >
               <a className="cursor-pointer hidden md:block">
