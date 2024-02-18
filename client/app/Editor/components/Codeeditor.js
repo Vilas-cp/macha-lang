@@ -191,7 +191,7 @@ function Codeeditor({ inCode, mlserverapi }) {
   const toast = useToast();
 
   const runCode = async () => {
-    const sourcecode = editorRef.current.getValue();
+    const sourcecode = value;
     if (!sourcecode) return;
     try {
       setisloading(true);
@@ -332,18 +332,6 @@ function Codeeditor({ inCode, mlserverapi }) {
               Run code
             </Button>
           </div>
-          {/* <Editor
-            theme="MACHALangTheme"
-            defaultLanguage={"MACHALang"}
-            defaultValue={CODE_SNIPPETS[def]}
-            value={value}
-            width={"100%"}
-            height={"45%"}
-            line={0}
-            options={{ minimap: { enabled: false } }}
-            onMount={onMount}
-            onChange={(value) => setValue(value)}
-          /> */}
           <div className="w-full h-[45%]">
             <CodeMirror
               defaultValue={CODE_SNIPPETS[def]}
