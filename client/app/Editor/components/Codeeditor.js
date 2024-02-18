@@ -9,6 +9,7 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import CodeMirror from "@uiw/react-codemirror";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -178,9 +179,9 @@ registerLang();
 function Codeeditor({ inCode, mlserverapi }) {
   const editorRef = useRef();
 
-  const [value, setValue] = useState("");
   const [language, setLanguage] = useState("MACHALang");
   const [def, setdef] = useState("machalang");
+  const [value, setValue] = useState(CODE_SNIPPETS["machalang"]);
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
@@ -331,7 +332,7 @@ function Codeeditor({ inCode, mlserverapi }) {
               Run code
             </Button>
           </div>
-          <Editor
+          {/* <Editor
             theme="MACHALangTheme"
             defaultLanguage={"MACHALang"}
             defaultValue={CODE_SNIPPETS[def]}
@@ -342,7 +343,17 @@ function Codeeditor({ inCode, mlserverapi }) {
             options={{ minimap: { enabled: false } }}
             onMount={onMount}
             onChange={(value) => setValue(value)}
-          />
+          /> */}
+          <div className="w-full h-[45%]">
+            <CodeMirror
+              defaultValue={CODE_SNIPPETS[def]}
+              value={value}
+              className="!w-full !h-full"
+              width="100%"
+              height="100%"
+              onChange={(value) => setValue(value)}
+            />
+          </div>
 
           <OutputTerminal1 output={output} language={def} />
         </div>
