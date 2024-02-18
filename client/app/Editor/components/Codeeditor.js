@@ -155,6 +155,153 @@ function registerLang() {
         startLineNumber: position.lineNumber,
         endLineNumber: position.lineNumber,
         startColumn: word.startColumn,
+        endColumn: word.endColumn
+      };
+      const suggestion = [
+        ...keywords.map((k) => {
+          return {
+            label: k,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: k,
+            range: range,
+          };
+        }),
+      ];
+      return { suggestions: suggestion };
+    },
+  });
+}
+function registerLang1() {
+  let some = 10
+  const somenew = 20;
+
+  console.log(some + somenew);
+  monaco.languages.register({ id: "MACHALang" });
+
+  // Register a tokens provider for the language
+  monaco.languages.setMonarchTokensProvider("MACHALang", {
+    tokenizer: {
+      root: [
+        [/".*"/, "string-matching"],
+        [/'.*'/, "string-matching"],
+        [/[^]*`/g, "string-matching"],
+        [/[0-9]/, "number-matching"],
+        [/\/\/.*/, "comment-matching"],
+        [/macha\.helu/, "keyword-declartion-3"],
+        [/[\(\)\[\]\{\}]/, "keyword-declartion-1"],
+        [/irlli/, "keyword-declartion-4"],
+        [/idu/, "keyword-declartion-4"],
+        [/kelsa/, "keyword-declartion-4"],
+        [/sari/, "keyword-declartion-1"],
+        [/tapu/, "keyword-declartion-1"],
+        [/khali/, "keyword-declartion-1"],
+        [/enuilla/, "keyword-declartion-1"],
+        [/mundehogu"/, "keyword-declartion-2"],
+        [/muri/, "keyword-declartion-2"],
+        [/kodu/, "keyword-declartion-2"],
+        [/enandre/, "keyword-declartion-2"],
+        [/illandre/, "keyword-declartion-2"],
+        [/illava/, "keyword-declartion-2"],
+        [/allivaragu/, "keyword-declartion-2"],
+        [/allitanka/, "keyword-declartion-2"],
+      ],
+    },
+  });
+
+  // Define a new theme that contains only rules that match this language
+  monaco.editor.defineTheme("MACHALangThemeDark", {
+    base: "vs",
+    inherit: false,
+    rules: [
+      {
+        token: "keyword-declartion-1",
+        foreground: "0000cd",
+        fontStyle: "bold",
+      },
+      { token: "keyword-declartion-2", foreground: "ac9d69" },
+      { token: "keyword-declartion-1", foreground: "c06041" },
+      { token: "keyword-declartion-3", foreground: "c4c878" },
+      { token: "keyword-declartion-4", foreground: "dbe18a" },
+      { token: "number-matching", foreground: "33cc33" },
+      { token: "string-matching", foreground: "ff5050" },
+      { token: "comment-matching", foreground: "1f7a1f" },
+    ],
+    colors: {
+      "editor.foreground": "#FFFFFF",
+      "editor.background": "#1c2130"
+    },
+    scrollbar: {},
+  });
+
+  // Register a completion item provider for the new language
+  monaco.languages.registerCompletionItemProvider("MACHALang", {
+    provideCompletionItems: (model, position) => {
+      var word = model.getWordUntilPosition(position);
+      var range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+      var suggestions = [
+        {
+          label: "simpleText",
+          kind: monaco.languages.CompletionItemKind.Text,
+          insertText: "simpleText",
+          range: range,
+        },
+        {
+          label: "testing",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: "testing(${1:condition})",
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          range: range,
+        },
+        {
+          label: "enandre",
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          insertText: [
+            "enandre (${1:condition}) {",
+            "\t$0",
+            "} illandre {",
+            "\t",
+            "}",
+          ].join("\n"),
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          documentation: "If-Else Statement",
+          range: range,
+        },
+      ];
+      return { suggestions: suggestions };
+    },
+  });
+  const keywords = [
+    "macha.helu",
+    "irlli",
+    "idu",
+    "kelsa",
+    "sari",
+    "tapu",
+    "khali",
+    "enuilla",
+    "mundehogu",
+    "muri",
+    "kodu",
+    "enandre",
+    "illandre",
+    "illava",
+    "allivaragu",
+    "allitanka",
+  ];
+  monaco.languages.registerCompletionItemProvider("MACHALang", {
+    provideCompletionItems: (model, position) => {
+      var word = model.getWordUntilPosition(position);
+      var range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
         endColumn: word.endColumn,
       };
       const suggestion = [
@@ -174,6 +321,7 @@ function registerLang() {
 
 // console.log(languages);
 registerLang();
+registerLang1();
 
 function Codeeditor({ inCode, mlserverapi }) {
   const editorRef = useRef();
@@ -243,7 +391,7 @@ function Codeeditor({ inCode, mlserverapi }) {
   const router = useRouter();
 
   return (
-    <>
+    <div className={`${isDarkMode?"bg-[#1f2023]":"bg-white"}`}>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
       <div className=" flex top-0 w-full space-x-8 items-center text-center h-[5vh] md:h-[10vh] ">
         <img src="/MachaLangPic.png" className="md:h-20 h-16 mt-2 md:mt-8" />
@@ -254,6 +402,7 @@ function Codeeditor({ inCode, mlserverapi }) {
           className="text-xl md:text-4xl"
           fontWeight="bold"
           marginLeft={0}
+          color={!isDarkMode?"black":"white"}
           cursor={"pointer"}
           onClick={() => router.push("/")}
         >
@@ -301,7 +450,7 @@ function Codeeditor({ inCode, mlserverapi }) {
               </span>
             </div>
             <Editor
-              theme="MACHALangTheme"
+              theme={!isDarkMode?"MACHALangTheme":"MACHALangThemeDark"}
               defaultLanguage={"MACHALang"}
               defaultValue={CODE_SNIPPETS[def]}
               value={value}
@@ -313,7 +462,7 @@ function Codeeditor({ inCode, mlserverapi }) {
               onChange={(value) => setValue(value)}
             />
           </Box>
-          <OutputTerminal output={output} language={def} />
+          <OutputTerminal output={output} language={def}  DarkMode={isDarkMode}/>
         </div>
       ) : (
         <div className="h-[95vh] flex flex-col flex-shrink">
@@ -347,7 +496,7 @@ function Codeeditor({ inCode, mlserverapi }) {
           <OutputTerminal1 output={output} language={def} />
         </div>
       )}
-    </>
+    </div>
   );
 }
 export default Codeeditor;
