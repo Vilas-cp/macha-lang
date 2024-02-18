@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter, redirect } from "next/navigation";
-import confetti from "canvas-confetti";
+
 import {
   Menu,
   MenuItem,
@@ -14,15 +14,14 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 const Header = () => {
   let router = useRouter();
-  const handleConfetti = () => {
-    confetti();
-  };
-
   return (
-    <header className="lg:fixed lg:flex-none bg-white lg:h-[60px] w-full lg:z-10 lg:shadow-2xl lg:px-9 z-50  fixed">
+    <header className="lg:fixed lg:flex-none bg-white lg:h-[60px] w-full lg:z-10 lg:shadow-2xl lg:px-9  fixed">
       <nav className="flex justify-between items-center p-4">
         <div className="flex justify-between items-center whitespace-pre-wrap break-words ">
-          <div className="font-extrabold text-2xl" onClick={handleConfetti}>
+          <div
+            className="font-extrabold text-2xl"
+            onClick={() => router.push("/")}
+          >
             ಮಚ್ಚಾ ಲ್ಯಾಂಗ್
           </div>
           <div className="flex justify-between pl-[22px] gap-[40px]">
@@ -31,26 +30,23 @@ const Header = () => {
                 <MenuButton as={IconButton} colorScheme="blue">
                   <HamburgerIcon />
                 </MenuButton>
-                <MenuList bg="#f5f5f5" padding={20}>
-                  <MenuItem paddingY={5} onClick={() => router.push("/Docs")}>
-                    {" "}
-                    Docs
-                  </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/Editor")}>
+                <MenuList bg="#f5f5f5">
+                  <MenuItem onClick={() => router.push("Docs")}> Docs</MenuItem>
+                  <MenuItem onClick={() => router.push("/Editor")}>
                     {" "}
                     Code Editor
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/Aboutus")}>
+                  <MenuItem onClick={() => router.push("Aboutus")}>
                     {" "}
                     About us
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/LiveClass")}>
+                  <MenuItem onClick={() => router.push("LiveClass")}>
                     {" "}
                     Live Class
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/AdvancePrograms")}>
+                  <MenuItem onClick={() => router.push("LiveClass")}>
                     {" "}
-                    AdvancePrgrams
+                    Advance program
                   </MenuItem>
                 </MenuList>
               </Menu>
@@ -75,19 +71,13 @@ const Header = () => {
               Code Editor
             </div>
             <div
-              onClick={() => router.push("/Aboutus")}
+              onClick={() => router.push("Aboutus")}
               className="cursor-pointer hidden lg:block"
             >
               About us
             </div>
             <div
-              onClick={() => router.push("/AdvancePrograms")}
-              className="cursor-pointer hidden lg:block"
-            >
-              AdvancePrograms
-            </div>
-            <div
-              onClick={() => router.push("/LiveClass")}
+              onClick={() => router.push("LiveClass")}
               className="cursor-pointer mt-3 lg:mt-0 "
             >
               <a className="cursor-pointer hidden md:block">

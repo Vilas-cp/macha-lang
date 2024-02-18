@@ -8,10 +8,10 @@ export default function Home() {
   return (
     <div className="bg-[#e7e9eb] ">
     <Header/>
-    <div className="p-[60px] font-bold text-[80px] ">
+    <div className="md:p-[60px] md:pt-28 pl-5  font-bold text-2xl md:text-[80px] pt-28">
         Members
     </div>
-    <div className="pr-[40px] pl-[40px] gap-[40px] flex justify-betweem items-center ">
+    <div className="pr-[40px] pl-[40px] gap-[40px] flex flex-col md:flex-row justify-betweem items-center ">
     <Card className="py-4 shadow-2xl  z-0">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
         <p className="text-tiny uppercase font-bold">Manoja.D</p>
@@ -22,7 +22,7 @@ export default function Home() {
         <Image
           alt="Card background"
           className="object-cover rounded-xl"
-          src="https://www.amongusavatarcreator.com/assets/img/characters/600/blue.png"
+          src="https://www.amongusavatarcreator.com/assets/img/characters/600/red.png"
           width={270}
         />
       </CardBody>
@@ -52,14 +52,14 @@ export default function Home() {
         <Image
           alt="Card background"
           className="object-cover rounded-xl"
-          src="https://www.amongusavatarcreator.com/assets/img/characters/600/white.png"
+          src="https://www.amongusavatarcreator.com/assets/img/characters/600/black.png"
           width={270}
         />
       </CardBody>
     </Card>
     
     </div>
-    <div className="flex pl-[40px] gap-[40px] pr-[40px] pb-[50px] mt-[100px]">
+    <div className="flex flex-col md:flex-row pl-[40px] gap-[40px] pr-[40px] pb-[50px] mt-[100px]">
     <Card className="py-4 shadow-2xl z-0">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
         <p className="text-tiny uppercase font-bold">Aditya.S</p>
@@ -70,7 +70,7 @@ export default function Home() {
         <Image
           alt="Card background"
           className="object-cover rounded-xl"
-          src="https://www.amongusavatarcreator.com/assets/img/characters/600/black.png"
+          src="https://www.amongusavatarcreator.com/assets/img/characters/600/blue.png"
           width={270}
         />
       </CardBody>

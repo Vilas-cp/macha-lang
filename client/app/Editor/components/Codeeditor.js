@@ -9,6 +9,8 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import CodeMirror from "@uiw/react-codemirror";
+import { useCodeMirror } from "@uiw/react-codemirror";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -19,9 +21,12 @@ import Langselector from "./Langselector";
 import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
 import { executecode } from "../api";
+import { useRouter } from "next/navigation";
+import OutputTerminal1 from "./OutputTerminal1";
 
 loader.config({ monaco });
 // Register a new language
+
 function registerLang() {
   let some = 10;
   const somenew = 20;
@@ -35,7 +40,7 @@ function registerLang() {
       root: [
         [/".*"/, "string-matching"],
         [/'.*'/, "string-matching"],
-        [/`[^`]*`/g, "string-matching"],
+        [/[^]*`/g, "string-matching"],
         [/[0-9]/, "number-matching"],
         [/\/\/.*/, "comment-matching"],
         [/macha\.helu/, "keyword-declartion-3"],
@@ -44,7 +49,7 @@ function registerLang() {
         [/idu/, "keyword-declartion-1"],
         [/kelsa/, "keyword-declartion-1"],
         [/sari/, "keyword-declartion-1"],
-        [/tapu/, "keyword-declartion-1"],
+        [/tappu/, "keyword-declartion-1"],
         [/khali/, "keyword-declartion-1"],
         [/enuilla/, "keyword-declartion-1"],
         [/mundehogu"/, "keyword-declartion-2"],
@@ -95,26 +100,12 @@ function registerLang() {
       };
       var suggestions = [
         {
-          label: "simpleText",
-          kind: monaco.languages.CompletionItemKind.Text,
-          insertText: "simpleText",
-          range: range,
-        },
-        {
-          label: "testing",
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: "testing(${1:condition})",
-          insertTextRules:
-            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range: range,
-        },
-        {
-          label: "ifelse",
+          label: "enandre",
           kind: monaco.languages.CompletionItemKind.Snippet,
           insertText: [
-            "if (${1:condition}) {",
+            "enandre (${1:condition}) {",
             "\t$0",
-            "} else {",
+            "} illandre {",
             "\t",
             "}",
           ].join("\n"),
@@ -127,17 +118,57 @@ function registerLang() {
       return { suggestions: suggestions };
     },
   });
+  const keywords = [
+    "macha.helu",
+    "irlli",
+    "idu",
+    "kelsa",
+    "sari",
+    "tappu",
+    "khali",
+    "enuilla",
+    "mundehogu",
+    "muri",
+    "kodu",
+    "enandre",
+    "illandre",
+    "illava",
+    "allivaragu",
+    "allitanka",
+  ];
+  monaco.languages.registerCompletionItemProvider("MACHALang", {
+    provideCompletionItems: (model, position) => {
+      var word = model.getWordUntilPosition(position);
+      var range = {
+        startLineNumber: position.lineNumber,
+        endLineNumber: position.lineNumber,
+        startColumn: word.startColumn,
+        endColumn: word.endColumn,
+      };
+      const suggestion = [
+        ...keywords.map((k) => {
+          return {
+            label: k,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: k,
+            range: range,
+          };
+        }),
+      ];
+      return { suggestions: suggestion };
+    },
+  });
 }
-// console.log(languages);
 
+// console.log(languages);
 registerLang();
 
 function Codeeditor({ inCode, mlserverapi }) {
   const editorRef = useRef();
 
-  const [value, setValue] = useState("");
   const [language, setLanguage] = useState("MACHALang");
   const [def, setdef] = useState("machalang");
+  const [value, setValue] = useState(CODE_SNIPPETS["machalang"]);
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
@@ -147,11 +178,12 @@ function Codeeditor({ inCode, mlserverapi }) {
   const toast = useToast();
 
   const runCode = async () => {
-    const sourcecode = editorRef.current.getValue();
+    const sourcecode = value;
     if (!sourcecode) return;
     try {
       setisloading(true);
       const result = await executecode(language, sourcecode, mlserverapi);
+      console.log(result);
       setOutput(result.result);
     } catch (error) {
       // Handle error
@@ -189,19 +221,36 @@ function Codeeditor({ inCode, mlserverapi }) {
     }
   }, [inCode]);
 
+  useEffect(() => {
+    if (window !== undefined) {
+      console.log("Hello");
+      console.log(editor);
+      console.log(editor.create);
+    }
+  }, []);
+  const router = useRouter();
+
   return (
     <>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
-      <div className=" flex top-0 w-full space-x-16  items-center text-center h-20 mt-[-55px] ml-[-30px]">
-        <img src="macha.jpg" height={80} width={80} />
+      <div className=" flex top-0 w-full space-x-8 items-center text-center h-[5vh] md:h-[10vh] ">
+        <img src="/MachaLangPic.png" className="h-full mt-0" />
 
-        <Text mb={2} fontSize="40px" marginTop={10} fontWeight="bold">
+        <Text
+          mb={2}
+          // fontSize="40px"
+          className="text-xl md:text-4xl"
+          fontWeight="bold"
+          marginLeft={0}
+          cursor={"pointer"}
+          onClick={() => router.push("/")}
+        >
           ಮಚ್ಚ Lang compiler
         </Text>
       </div>
       {isLargerThan1024 ? (
-        <HStack spacing={0}>
-          <Box w="50%" mt={4} ml={-30}>
+        <div className="h-[90vh] flex flex-row flex-shrink">
+          <Box height={"100%"} className="md:w-[50%] w-full">
             <div className="block">
               <Langselector language={"MACHALang"} onSelect={onSelect} />
               <Button
@@ -215,65 +264,7 @@ function Codeeditor({ inCode, mlserverapi }) {
               >
                 Run code
               </Button>
-              <Button
-                variant="outline"
-                bg="#f5f5f5"
-                color="rgba(37, 38, 94, 0.7)"
-                mb={29}
-                float={"right"}
-                mr={6}
-              >
-                Save
-              </Button>
-              <Button
-                variant="outline"
-                bg="#f5f5f5"
-                color="rgba(37, 38, 94, 0.7)"
-                mr={6}
-                mb={29}
-                float={"right"}
-                onClick={DarkMode}
-              >
-                {isDarkMode ? "Light" : "Dark"}
-              </Button>
-            </div>
-            <Editor
-              height="100vh"
-              theme="MACHALangTheme"
-              defaultLanguage={"MACHALang"}
-              defaultValue={CODE_SNIPPETS[def]}
-              value={value}
-              className="-mt-5"
-              line={0}
-              options={{ minimap: { enabled: false } }}
-              onMount={onMount}
-              onChange={(value) => setValue(value)}
-            />
-          </Box>
-          <OutputTerminal output={output} language={def} />
-        </HStack>
-      ) : (
-        <div>
-          <HStack
-            spacing={0}
-            css={{
-              flexDirection: "column",
-            }}
-          >
-            <Box w="100%" mt={4} ml={-30}>
-              <div className="block">
-                <Langselector language={"MACHALang"} onSelect={onSelect} />
-                <Button
-                  variant="outline"
-                  bg="green.300"
-                  mb={29}
-                  float={"right"}
-                  mr={4}
-                  onClick={runCode}
-                  isLoading={isLoading}
-                >
-                  Run code
-                </Button>
+              <span className="!hidden md:!block">
                 <Button
                   variant="outline"
                   bg="#f5f5f5"
@@ -295,22 +286,51 @@ function Codeeditor({ inCode, mlserverapi }) {
                 >
                   {isDarkMode ? "Light" : "Dark"}
                 </Button>
-              </div>
-              <Editor
-                theme="MACHALangTheme"
-                defaultLanguage={"MACHALang"}
-                defaultValue={CODE_SNIPPETS[def]}
-                value={value}
-                className="-mt-5 min-h-96"
-                line={0}
-                options={{ minimap: { enabled: false } }}
-                onMount={onMount}
-                onChange={(value) => setValue(value)}
-              />
-            </Box>
-            <OutputTerminal output={output} language={def} />
-          </HStack>
-          :
+              </span>
+            </div>
+            <Editor
+              theme="MACHALangTheme"
+              defaultLanguage={"MACHALang"}
+              defaultValue={CODE_SNIPPETS[def]}
+              value={value}
+              height={"91%"}
+              className="w-full"
+              line={0}
+              options={{ minimap: { enabled: false } }}
+              onMount={onMount}
+              onChange={(value) => setValue(value)}
+            />
+          </Box>
+          <OutputTerminal output={output} language={def} />
+        </div>
+      ) : (
+        <div className="h-[95vh] flex flex-col flex-shrink">
+          <div className="block w-full h-[5%]">
+            <Langselector language={"MACHALang"} onSelect={onSelect} />
+            <Button
+              variant="outline"
+              bg="green.300"
+              mb={29}
+              float={"right"}
+              mr={4}
+              onClick={runCode}
+              isLoading={isLoading}
+            >
+              Run code
+            </Button>
+          </div>
+          <div className="w-full h-[45%]">
+            <CodeMirror
+              defaultValue={CODE_SNIPPETS[def]}
+              value={value}
+              className="!w-full !h-full"
+              width="100%"
+              height="100%"
+              onChange={(value) => setValue(value)}
+            />
+          </div>
+
+          <OutputTerminal1 output={output} language={def} />
         </div>
       )}
     </>
