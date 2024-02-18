@@ -10,6 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import CodeMirror from "@uiw/react-codemirror";
+import { useCodeMirror } from "@uiw/react-codemirror";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -48,7 +49,7 @@ function registerLang() {
         [/idu/, "keyword-declartion-1"],
         [/kelsa/, "keyword-declartion-1"],
         [/sari/, "keyword-declartion-1"],
-        [/tapu/, "keyword-declartion-1"],
+        [/tappu/, "keyword-declartion-1"],
         [/khali/, "keyword-declartion-1"],
         [/enuilla/, "keyword-declartion-1"],
         [/mundehogu"/, "keyword-declartion-2"],
@@ -99,20 +100,6 @@ function registerLang() {
       };
       var suggestions = [
         {
-          label: "simpleText",
-          kind: monaco.languages.CompletionItemKind.Text,
-          insertText: "simpleText",
-          range: range,
-        },
-        {
-          label: "testing",
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: "testing(${1:condition})",
-          insertTextRules:
-            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range: range,
-        },
-        {
           label: "enandre",
           kind: monaco.languages.CompletionItemKind.Snippet,
           insertText: [
@@ -137,7 +124,7 @@ function registerLang() {
     "idu",
     "kelsa",
     "sari",
-    "tapu",
+    "tappu",
     "khali",
     "enuilla",
     "mundehogu",

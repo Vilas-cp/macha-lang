@@ -59,11 +59,11 @@ let text = [
   },
   
   {
-    Name: "allivargu",
+    Name: "allivaragu",
     Type: "for: A for loop is a control statement using which the user can give instructions to the computer to execute a set of statements repeatedly for a specified number of time. Once the specified number of times the loop is executed, the control comes out of the loop.",
     Description: "Macha lang supports the for control statement. allivargu is used to declare a for loop. allivargu is normally used when we know in advance exactly how many times a set of statements should be repeatedly executed. allivargu is a keyword followed by three expressions enclosed within parenthesis. The first expression contains initialization statements. The second expression is a relational expression that determines when the loop exits. The third expression contains updating expression. ",
     Example:
-      "allivargu(i=0;i<=5;i++){<br/><pre style='display: inline;'>    </pre>macha.helu(i);<br/>}<br/>",
+      "allivaragu(i=0;i<=5;i++){<br/><pre style='display: inline;'>    </pre>macha.helu(i);<br/>}<br/>",
   },
 
   {
@@ -86,15 +86,15 @@ let text = [
   
   {
   	Name: "gumpu", 
-  	Type: "array: An array is a collection of similar type of elements which can be referred by a common name. The particular position of an element in an array is called array index. ",
-  	Description: "In Macha lang, we use the keyword gumpu to declare an array. The elements can be created following the array name by assigning their position within square brackets ",
+  	Type: "array: An array is a collection of elements which can be referred by a common name. The particular position of an element in an array is called array index. ",
+  	Description: "In Macha lang, we use '[]' to declare an array. The elements can be created at particular index in the array within square brackets ",
   	Example: "irlli gumpu = [];<br/> gumpu[0]= 'Hi';<br/> gumpu[1]= 'Hello';<br/> gumpu[2]= 'abc'",
   },
 
   {
   	Name: "vastu", 
-  	Type: "object: In programming, an object is an instance of a class, representing a structured unit with data and related functions. Objects encapsulate properties and behaviors, promoting code reusability and abstraction",
-  	Description: "In Macha lang we use vastu to create an object. Vastu is a collection of properties. You can access these properties in two ways:.vastuName['propertyName'] . vastuNamepropertyName",
+  	Type: "object: In programming, an object is an instance of a collection ok key value pair, representing a structured unit with data.",
+  	Description: "In Macha lang we use '{}' to create an object. Vastu is a collection of properties. You can access these properties in two ways: vastu['propertyName'] vastu.propertyName. In Macha Lang objects/vastu are always passed by reference.",
   	Example: "irlli vastu = {type:'Fiat', model:'500', color:'white'};",
   },
 
@@ -130,7 +130,7 @@ let text = [
   	Name: "kodu", 
   	Type: "return: The return keyword is used to exit a function and return a value to the calling code. It signifies the end of the function's execution and passes a specified result back to the point in the program where the function was called. If no value is specified after return, the function exits without returning a value.",
   	Description: "In Macha lang, we use the keyword kodu instead of return statement. The kodu statement ",
-  	Example: "kelsa add() { <br/>  return 3+4;<br/> } <br/> macha.helu(add());",
+  	Example: "kelsa add() { <br/>  kodu 3+4;<br/> } <br/> macha.helu(add());",
   },
 
 ];
