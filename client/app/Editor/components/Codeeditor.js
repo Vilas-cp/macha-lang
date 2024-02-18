@@ -20,6 +20,7 @@ import { CODE_SNIPPETS } from "./constants";
 import OutputTerminal from "./OutputTerminal";
 import { executecode } from "../api";
 import { useRouter } from "next/navigation";
+import OutputTerminal1 from "./OutputTerminal1";
 
 loader.config({ monaco });
 // Register a new language
@@ -237,11 +238,6 @@ function Codeeditor({ inCode, mlserverapi }) {
       console.log("Hello");
       console.log(editor);
       console.log(editor.create);
-      // monaco.editor.create(window.document.getElementById("containerEditor"), {
-      //   theme: "MACHALangTheme",
-      //   value: CODE_SNIPPETS[def],
-      //   language: "MACHALang",
-      // });
     }
   }, []);
   const router = useRouter();
@@ -249,23 +245,24 @@ function Codeeditor({ inCode, mlserverapi }) {
   return (
     <>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
-      <div className=" flex top-0 w-full space-x-16  items-center text-center h-20 mt-[-55px] ml-[-30px]">
-        <img src="macha.jpg" height={80} width={80} />
+      <div className=" flex top-0 w-full space-x-8 items-center text-center h-[5vh] md:h-[10vh] ">
+        <img src="/MachaLangPic.png" className="md:h-20 h-16 mt-2 md:mt-8" />
 
         <Text
           mb={2}
-          fontSize="40px"
-          marginTop={10}
+          // fontSize="40px"
+          className="text-xl md:text-4xl"
           fontWeight="bold"
+          marginLeft={0}
           cursor={"pointer"}
-          onClick={() => router.push(".")}
+          onClick={() => router.push("/")}
         >
           ಮಚ್ಚ Lang compiler
         </Text>
       </div>
       {isLargerThan1024 ? (
-        <HStack spacing={0}>
-          <Box w="50%" mt={4} ml={-30} className="md:w-[50%] w-full">
+        <div className="h-[90vh] flex flex-row flex-shrink">
+          <Box height={"100%"} className="md:w-[50%] w-full">
             <div className="block">
               <Langselector language={"MACHALang"} onSelect={onSelect} />
               <Button
@@ -281,7 +278,6 @@ function Codeeditor({ inCode, mlserverapi }) {
               </Button>
               <span className="!hidden md:!block">
                 <Button
-                  
                   variant="outline"
                   bg="#f5f5f5"
                   color="rgba(37, 38, 94, 0.7)"
@@ -296,7 +292,6 @@ function Codeeditor({ inCode, mlserverapi }) {
                   bg="#f5f5f5"
                   color="rgba(37, 38, 94, 0.7)"
                   mr={6}
-                 
                   mb={29}
                   float={"right"}
                   onClick={DarkMode}
@@ -306,12 +301,12 @@ function Codeeditor({ inCode, mlserverapi }) {
               </span>
             </div>
             <Editor
-              height="100vh"
               theme="MACHALangTheme"
               defaultLanguage={"MACHALang"}
               defaultValue={CODE_SNIPPETS[def]}
               value={value}
-              className="-mt-5 40-vh md:100-vh w-full"
+              height={"91%"}
+              className="w-full"
               line={0}
               options={{ minimap: { enabled: false } }}
               onMount={onMount}
@@ -319,66 +314,37 @@ function Codeeditor({ inCode, mlserverapi }) {
             />
           </Box>
           <OutputTerminal output={output} language={def} />
-        </HStack>
+        </div>
       ) : (
-        <div>
-          <HStack
-            spacing={0}
-            css={{
-              flexDirection: "column",
-            }}
-          >
-            <Box w="100%" mt={4} ml={-30}>
-              <div className="block">
-                <Langselector language={"MACHALang"} onSelect={onSelect} />
-                <Button
-                  variant="outline"
-                  bg="green.300"
-                  mb={29}
-                  float={"right"}
-                  mr={4}
-                  onClick={runCode}
-                  isLoading={isLoading}
-                >
-                  Run code
-                </Button>
-                <Button
-                  variant="outline"
-                  bg="#f5f5f5"
-                  color="rgba(37, 38, 94, 0.7)"
-                  mb={29}
-                  float={"right"}
-                  mr={6}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="outline"
-                  bg="#f5f5f5"
-                  color="rgba(37, 38, 94, 0.7)"
-                  mr={6}
-                  mb={29}
-                  float={"right"}
-                  onClick={DarkMode}
-                >
-                  {isDarkMode ? "Light" : "Dark"}
-                </Button>
-              </div>
-              <Editor
-                theme="MACHALangTheme"
-                defaultLanguage={"MACHALang"}
-                defaultValue={CODE_SNIPPETS[def]}
-                value={value}
-                className="-mt-5 min-h-96"
-                line={0}
-                options={{ minimap: { enabled: false } }}
-                onMount={onMount}
-                onChange={(value) => setValue(value)}
-              />
-            </Box>
-            <OutputTerminal output={output} language={def} />
-          </HStack>
-          :
+        <div className="h-[95vh] flex flex-col flex-shrink">
+          <div className="block w-full h-[5%]">
+            <Langselector language={"MACHALang"} onSelect={onSelect} />
+            <Button
+              variant="outline"
+              bg="green.300"
+              mb={29}
+              float={"right"}
+              mr={4}
+              onClick={runCode}
+              isLoading={isLoading}
+            >
+              Run code
+            </Button>
+          </div>
+          <Editor
+            theme="MACHALangTheme"
+            defaultLanguage={"MACHALang"}
+            defaultValue={CODE_SNIPPETS[def]}
+            value={value}
+            width={"100%"}
+            height={"45%"}
+            line={0}
+            options={{ minimap: { enabled: false } }}
+            onMount={onMount}
+            onChange={(value) => setValue(value)}
+          />
+
+          <OutputTerminal1 output={output} language={def} />
         </div>
       )}
     </>
