@@ -100,8 +100,6 @@ export default function Home() {
         if (remoteVideoRef.current.srcObject.getTracks().length <= 1) {
           console.log(remoteVideoRef.current.srcObject.getTracks());
           remoteVideoRef.current.srcObject.addTrack(track);
-          console.log(remoteVideoRef.current.srcObject.getTracks());
-          remoteVideoRef.current.srcObject.addTrack(track);
         }
       });
     };
@@ -158,7 +156,6 @@ export default function Home() {
     setHangupButtonDisabled(true);
   };
 
-
   // 3. Answer the call with the unique ID
   let handleAnswerButtonClick = async () => {
     const callId = callInputValue;
@@ -204,6 +201,7 @@ export default function Home() {
       <Header />
       <div className="antialiased text-center text-gray-700 pt-[80px]  ">
         <h2 className=" font-bold text-[50px]">ONLINE TUTORING</h2>
+
         <div className="flex flex-col md:flex-row items-center justify-center">
           <span>
             <video
@@ -231,6 +229,14 @@ export default function Home() {
         >
           <p className="text-white font-semibold"> Start Webcam</p>
         </button>
+        <button
+          onClick={() => setCallInputValue(latestCallDocId)}
+          className="bg-[#9455d3] w-[280px] h-[40px] rounded-xl mt-[5px] mb-[10px]"
+        >
+          <p className="text-white font-semibold">
+            Click to join the latest class
+          </p>
+        </button>
         <div className="flex justify-center items-center">
           <h2 className="inline-block font-semibold text-xl py-2 md:text-[30px] pr-[10px] ">
             Ask others to Join:
@@ -244,7 +250,6 @@ export default function Home() {
           </button>
         </div>
         <h2 className="mb-[4px] font-semibold">or</h2>
-
 
         <div className="flex gap-[20px] justify-center">
           <input
