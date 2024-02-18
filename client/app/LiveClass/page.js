@@ -273,10 +273,6 @@ export default function Home() {
             src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png"
             width={50}
           />
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png"
-            width={50}
-          />
         </button>
       </div>
     </div>
