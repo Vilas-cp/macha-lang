@@ -7,12 +7,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-function OutputTerminal1({ output, language }) {
+function OutputTerminal1({ output, language, DarkMode }) {
   const isLargerThan1023 = useBreakpointValue({ base: false, lg: true });
   return (
     <Box w="100%" height={"50%"} color="white">
       <button
-        className="text-xl ml-4 font-bold text-black bg-[#d3d3d3] p-1 border-t-gray-400 border-x-gray-400 border border-b-[#d3d3d3]"
+        className={`text-2xl font-bold ${!DarkMode?"text-black":"text-white"} ${!DarkMode?"bg-[#d3d3d3]":"bg-[#1c2130]"} p-3  -mb-6 ${!DarkMode?"border-t-gray-400":"border-t-black"} ${!DarkMode?"border-x-gray-400":"border-x-black"} border  ${DarkMode?"border-b-[#d3d3d3]":"border-b-"}`}
         fontWeight="bold"
         color="black"
       >
@@ -20,10 +20,11 @@ function OutputTerminal1({ output, language }) {
       </button>
 
       <Box
-        bg="lightgrey"
+        
         height={"91%"}
         p={2}
-        color="black"
+        bg={!DarkMode?"lightgrey":"#1c2130"}
+        color={!DarkMode?"black":"white"}
         overflowY={"auto"}
         overflowX={"auto"}
       >

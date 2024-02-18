@@ -433,7 +433,7 @@ function Codeeditor({ inCode, mlserverapi }) {
                   float={"right"}
                   onClick={DarkMode}
                 >
-                  {isDarkMode ? "Light" : "Dark"}
+                  {!isDarkMode ? "Light" : "Dark"}
                 </Button>
               </span>
             </div>
@@ -456,20 +456,33 @@ function Codeeditor({ inCode, mlserverapi }) {
         <div className="h-[95vh] flex flex-col flex-shrink">
           <div className="block w-full h-[5%]">
             <Langselector language={"MACHALang"} onSelect={onSelect} />
+            
             <Button
               variant="outline"
               bg="green.300"
               mb={29}
               float={"right"}
-              mr={4}
+              
               onClick={runCode}
               isLoading={isLoading}
             >
               Run code
             </Button>
+            <Button
+                  variant="outline"
+                  bg="#f5f5f5"
+                  color="rgba(37, 38, 94, 0.7)"
+                  
+                  mb={29}
+                  float={"right"}
+                  onClick={DarkMode}
+                >
+                  {!isDarkMode ? "Light" : "Dark"}
+                </Button>
           </div>
           <div className="w-full h-[45%]">
             <CodeMirror
+            theme={isDarkMode ? "dark" : "light"}
               defaultValue={CODE_SNIPPETS[def]}
               value={value}
               className="!w-full !h-full"
@@ -479,7 +492,7 @@ function Codeeditor({ inCode, mlserverapi }) {
             />
           </div>
 
-          <OutputTerminal1 output={output} language={def} />
+          <OutputTerminal1 output={output} language={def} DarkMode={isDarkMode}  />
         </div>
       )}
     </div>
