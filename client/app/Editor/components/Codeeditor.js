@@ -246,7 +246,7 @@ function Codeeditor({ inCode, mlserverapi }) {
     <>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
       <div className=" flex top-0 w-full space-x-8 items-center text-center h-[5vh] md:h-[10vh] ">
-        <img src="/MachaLangPic.png" className="md:h-20 h-16 mt-2 md:mt-8" />
+        <img src="/MachaLangPic.png" className="h-full mt-0" />
 
         <Text
           mb={2}
