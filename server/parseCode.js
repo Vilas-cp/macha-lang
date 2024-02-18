@@ -2,6 +2,7 @@ const fs = require("fs");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 const writeFile = util.promisify(fs.writeFile);
+const uuid =  require('uuid');
 
 async function parseMachaLangCode(code) {
   if (typeof code === "string") {
@@ -138,16 +139,17 @@ async function parseMachaLangCode(code) {
     const resultString = spiltArray2.join("\n");
     logs = logs + "\nResultant String:\n";
     logs = logs + resultString + "\n\n" + "Log Writing Ends Here!\n";
+    const someRandomUUID = uuid.v4();
     logWriting(logs);
-    await writeBuildFile(resultString);
-    const resultString2 = await runCompiledCode(logs);
+    await writeBuildFile(resultString, someRandomUUID);
+    const resultString2 = await runCompiledCode(logs, someRandomUUID);
     return resultString2;
   }
 }
 
-async function writeBuildFile(code) {
+async function writeBuildFile(code, unique_id) {
   try {
-    await writeFile("./build/build.js", code, {
+    await writeFile(`./build/${unique_id}_build.js`, code, {
       encoding: "utf8",
     });
   } catch (error) {
@@ -155,9 +157,9 @@ async function writeBuildFile(code) {
   }
 }
 
-function reverseCode(code) {
+function reverseCode(code, unique_id) {
   // console.log(code);
-  code = code.replace("build/build.js", "build/compiled.macha");
+  code = code.replace(`build/${unique_id}_build.js`, `build/${unique_id}_compiled.macha`);
   let spacing = "";
   let negaOrPost = 0;
   if (code.match(/for/) !== null) {
@@ -278,17 +280,17 @@ function reverseCode(code) {
   return code;
 }
 
-async function runCompiledCode(logs) {
+async function runCompiledCode(logs, someRandomUUID) {
   try {
     // await exec("rollup -c");
     // const { stdout, stderr } = await exec("node ./build/bundle.js");
-    const { stdout, stderr } = await exec("node ./build/build.js");
+    const { stdout, stderr } = await exec(`node ./build/${someRandomUUID}_build.js`);
     if (stderr) {
       console.log(stderr);
       return stderr;
     } else {
-      await exec("rollup -c");
-      const { stdout, stderr } = await exec("node ./build/bundle.js");
+      await exec(`rollup -c -i ./build/${someRandomUUID}_build.js -o ./build/${someRandomUUID}_bundle.js`);
+      const { stdout, stderr } = await exec(`node ./build/${someRandomUUID}_bundle.js`);
       if (stdout !== null && stdout !== undefined) {
         logs = logs + "Output of Code: \n" + stdout;
         logWriting(logs);
@@ -304,29 +306,6 @@ async function runCompiledCode(logs) {
         logWriting(logs);
         return { result: stderr, statusCode: "error" };
       }
-      /*
-      await exec("rollup -c");
-      // const { stdout, stderr } = await exec("node ./build/bundle.js");
-      await exec("javy compile ./build/bundle.js -o ./build/bundle.asm");
-      const { stdout, stderr } = await exec("wasmtime run ./build/bundle.asm");
-      if (stderr !== null) {
-        // console.log(stdout + stderr);
-        logs = logs + "Output of Code: \n" + stderr;
-        // console.log(logs);
-        logWriting(logs);
-        return { result: stderr, statusCode: null };
-      } else {
-        logs =
-          logs +
-          "Output Compiled Error: \n" +
-          stderr +
-          "\n\n" +
-          "Output Error: \n" +
-          reverseCode(stderr);
-        logWriting(logs);
-        return { result: stdout + stderr, statusCode: "error" };
-      }
-      */
     }
   } catch (error) {
     // console.log(error);
