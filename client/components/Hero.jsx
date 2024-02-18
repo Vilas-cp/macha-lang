@@ -70,11 +70,11 @@ const Hero = () => {
     </div>
     </div>
     
-    <div className='w-full h-[700px] bg-[#FFF4A3!important]'>
-    <h1 className='pt-[20px] px-[40px] text-[60px] font-bold'>
+    <div className='w-full h-[900px] md:h-[700px] bg-[#FFF4A3!important]'>
+    <h1 className='md:pt-[20px] md:px-[40px] px-2 pt-2 text-center text-[60px] font-bold'>
           Isuue
         </h1>
-        <div className='flex justify-center items-center  h-fit pt-[40px] gap-[20px] '>
+        <div className='flex justify-center items-center flex-col md:flex-row h-fit pt-[20px] md:pt-[40px] gap-[20px] '>
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -84,10 +84,10 @@ const Hero = () => {
               disableOnInteraction: false,
             }}
             modules={[Autoplay, Pagination, Navigation]}
-            className="mySwiper w-[60vh] mr-0 pr-0">
+            className="mySwiper md:w-[60vh] w-[100%] mr-0 pr-0">
             {result}
           </Swiper>
-          <div className='font-semi w-[800px] pr-[100px] text-xl'>
+          <div className='font-semi md:w-[800px] md:pr-[100px] text-sm w-full h-full p-2 md:text-xl'>
           {`Rural schools may lack adequate English language learning materials such as textbooks,
            workbooks, and audiovisual aids. Without these resources,
            children may struggle to develop their English language skills effectively. 

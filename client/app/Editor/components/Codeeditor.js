@@ -9,6 +9,8 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import CodeMirror from "@uiw/react-codemirror";
+import { useCodeMirror } from "@uiw/react-codemirror";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -47,7 +49,7 @@ function registerLang() {
         [/idu/, "keyword-declartion-1"],
         [/kelsa/, "keyword-declartion-1"],
         [/sari/, "keyword-declartion-1"],
-        [/tapu/, "keyword-declartion-1"],
+        [/tappu/, "keyword-declartion-1"],
         [/khali/, "keyword-declartion-1"],
         [/enuilla/, "keyword-declartion-1"],
         [/mundehogu"/, "keyword-declartion-2"],
@@ -98,20 +100,6 @@ function registerLang() {
       };
       var suggestions = [
         {
-          label: "simpleText",
-          kind: monaco.languages.CompletionItemKind.Text,
-          insertText: "simpleText",
-          range: range,
-        },
-        {
-          label: "testing",
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          insertText: "testing(${1:condition})",
-          insertTextRules:
-            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range: range,
-        },
-        {
           label: "enandre",
           kind: monaco.languages.CompletionItemKind.Snippet,
           insertText: [
@@ -136,7 +124,7 @@ function registerLang() {
     "idu",
     "kelsa",
     "sari",
-    "tapu",
+    "tappu",
     "khali",
     "enuilla",
     "mundehogu",
@@ -326,9 +314,9 @@ registerLang1();
 function Codeeditor({ inCode, mlserverapi }) {
   const editorRef = useRef();
 
-  const [value, setValue] = useState("");
   const [language, setLanguage] = useState("MACHALang");
   const [def, setdef] = useState("machalang");
+  const [value, setValue] = useState(CODE_SNIPPETS["machalang"]);
 
   const [output, setOutput] = useState(null);
   const [isLoading, setisloading] = useState(false);
@@ -338,7 +326,7 @@ function Codeeditor({ inCode, mlserverapi }) {
   const toast = useToast();
 
   const runCode = async () => {
-    const sourcecode = editorRef.current.getValue();
+    const sourcecode = value;
     if (!sourcecode) return;
     try {
       setisloading(true);
@@ -394,7 +382,7 @@ function Codeeditor({ inCode, mlserverapi }) {
     <div className={`${isDarkMode?"bg-[#1f2023]":"bg-white"}`}>
       {/* <div id="containerEditor" style={{ height: "100vh" }}></div> */}
       <div className=" flex top-0 w-full space-x-8 items-center text-center h-[5vh] md:h-[10vh] ">
-        <img src="/MachaLangPic.png" className="md:h-20 h-16 mt-2 md:mt-8" />
+        <img src="/MachaLangPic.png" className="h-full mt-0" />
 
         <Text
           mb={2}
@@ -480,18 +468,16 @@ function Codeeditor({ inCode, mlserverapi }) {
               Run code
             </Button>
           </div>
-          <Editor
-            theme="MACHALangTheme"
-            defaultLanguage={"MACHALang"}
-            defaultValue={CODE_SNIPPETS[def]}
-            value={value}
-            width={"100%"}
-            height={"45%"}
-            line={0}
-            options={{ minimap: { enabled: false } }}
-            onMount={onMount}
-            onChange={(value) => setValue(value)}
-          />
+          <div className="w-full h-[45%]">
+            <CodeMirror
+              defaultValue={CODE_SNIPPETS[def]}
+              value={value}
+              className="!w-full !h-full"
+              width="100%"
+              height="100%"
+              onChange={(value) => setValue(value)}
+            />
+          </div>
 
           <OutputTerminal1 output={output} language={def} />
         </div>

@@ -117,8 +117,8 @@ async function parseMachaLangCode(code) {
       if (element.match("sari") !== null) {
         element = element.replace(/sari/g, "true");
       }
-      if (element.match("tapu") !== null) {
-        element = element.replace(/tapu/g, "false");
+      if (element.match("tappu") !== null) {
+        element = element.replace(/tappu/g, "false");
       }
       if (element.match("khali") !== null) {
         element = element.replace(/khali/g, "null");
@@ -239,9 +239,9 @@ function reverseCode(code, unique_id) {
   }
 
   if (code.match(/false/) !== null) {
-    code = code.replace(/false/g, "tapu");
-    spacing = spacing + " ".repeat(Math.abs("false".length - "tapu".length));
-    negaOrPost = negaOrPost + ("false".length - "tapu".length) * -1;
+    code = code.replace(/false/g, "tappu");
+    spacing = spacing + " ".repeat(Math.abs("false".length - "tappu".length));
+    negaOrPost = negaOrPost + ("false".length - "tappu".length) * -1;
   }
 
   if (code.match(/null/) !== null) {
