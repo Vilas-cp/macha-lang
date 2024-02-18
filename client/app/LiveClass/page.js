@@ -5,7 +5,6 @@ import firebase from "firebase/compat/app";
 import { useEffect, useState, useRef } from "react";
 import "firebase/compat/firestore";
 
-
 const servers = {
   iceServers: [
     {
@@ -59,6 +58,23 @@ export default function Home() {
 
   // HTML elements
 
+  useEffect(() => {
+    const unsubscribe = firestore.current
+      .collection("calls")
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            setLatestCallDocId(change.doc.id);
+          }
+        });
+      });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, [firestore.current]);
+
+  const [latestCallDocId, setLatestCallDocId] = useState("");
+
   // 1. Setup media sources
 
   let handleWebcamButtonClick = async () => {
@@ -82,8 +98,8 @@ export default function Home() {
     pc.ontrack = (event) => {
       event.streams[0].getTracks().forEach((track) => {
         if (remoteVideoRef.current.srcObject.getTracks().length <= 1) {
-        console.log(remoteVideoRef.current.srcObject.getTracks());
-        remoteVideoRef.current.srcObject.addTrack(track);
+          console.log(remoteVideoRef.current.srcObject.getTracks());
+          remoteVideoRef.current.srcObject.addTrack(track);
         }
       });
     };
@@ -137,10 +153,9 @@ export default function Home() {
       });
     });
 
-    setHangupButtonDisabled(false);
+    setHangupButtonDisabled(true);
   };
 
-  
   // 3. Answer the call with the unique ID
   let handleAnswerButtonClick = async () => {
     const callId = callInputValue;
@@ -186,9 +201,9 @@ export default function Home() {
       <Header />
       <div className="antialiased text-center text-gray-700 pt-[80px]  ">
         <h2 className=" font-bold text-[50px]">ONLINE TUTORING</h2>
+
         <div className="flex items-center justify-center flex-row">
           <span>
-            
             <video
               ref={webcamVideoRef}
               className="w-[40vw] h-[30vw] m-8 bg-gray-900"
@@ -197,7 +212,6 @@ export default function Home() {
             ></video>
           </span>
           <span>
-            
             <video
               ref={remoteVideoRef}
               autoPlay
@@ -212,40 +226,47 @@ export default function Home() {
           className="bg-[#0070f0] w-[180px] h-[40px] rounded-xl block ml-[140px]"
           disabled={webcamButtonDisabled}
           color="primary"
-          
         >
-         <p className="text-white font-semibold" > Start Webcam</p>
+          <p className="text-white font-semibold"> Start Webcam</p>
+        </button>
+        <button
+          onClick={() => setCallInputValue(latestCallDocId)}
+          className="bg-[#9455d3] w-[280px] h-[40px] rounded-xl mt-[5px] mb-[10px]">
+          <p className="text-white font-semibold">
+            Click to join the latest class
+          </p>
         </button>
         <div className="flex justify-center items-center">
-        <h2 className="inline-block font-semibold text-[30px] pr-[10px] ">Ask others to Join:</h2>
-        <button
-          onClick={handleCallButtonClick}
-          disabled={callButtonDisabled}
-          className="bg-[#9455d3] w-[180px] h-[40px] rounded-xl "
           
-        >
-          <p className="text-white font-semibold">Ask for class</p>
-        </button>
+          <h2 className="inline-block font-semibold text-[30px] pr-[10px] ">
+            Ask others to Join:
+          </h2>
+          <button
+            onClick={handleCallButtonClick}
+            disabled={callButtonDisabled}
+            className="bg-[#9455d3] w-[180px] h-[40px] rounded-xl "
+          >
+            <p className="text-white font-semibold">Ask for class</p>
+          </button>
         </div>
         <h2 className="mb-[4px] font-semibold">or</h2>
-        
-        <div className="flex gap-[20px] justify-center">
-        <input
-          id="callInput"
-          value={callInputValue}
-          onChange={handleCallInputChange}
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[400px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-          placeholder="online-class-id"
-        />
-      
-        <button
-          onClick={handleAnswerButtonClick}
-          disabled={answerButtonDisabled}
-          className="bg-[#0070f0] w-[200px] rounded-xl"
 
-        >
-         <p className="text-white font-semibold"> Join class</p> 
-        </button>
+        <div className="flex gap-[20px] justify-center">
+          <input
+            id="callInput"
+            value={callInputValue}
+            onChange={handleCallInputChange}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[400px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="online-class-id"
+          />
+
+          <button
+            onClick={handleAnswerButtonClick}
+            disabled={answerButtonDisabled}
+            className="bg-[#0070f0] w-[200px] rounded-xl"
+          >
+            <p className="text-white font-semibold"> Join class</p>
+          </button>
         </div>
 
         <button
@@ -253,7 +274,10 @@ export default function Home() {
           disabled={hangupButtonDisabled}
           className="rounded-full pt-[20px]"
         >
-          <img src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png" width={50}/>
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png"
+            width={50}
+          />
         </button>
       </div>
     </div>
