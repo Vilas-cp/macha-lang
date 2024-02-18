@@ -100,6 +100,8 @@ export default function Home() {
         if (remoteVideoRef.current.srcObject.getTracks().length <= 1) {
           console.log(remoteVideoRef.current.srcObject.getTracks());
           remoteVideoRef.current.srcObject.addTrack(track);
+          console.log(remoteVideoRef.current.srcObject.getTracks());
+          remoteVideoRef.current.srcObject.addTrack(track);
         }
       });
     };
@@ -156,6 +158,7 @@ export default function Home() {
     setHangupButtonDisabled(true);
   };
 
+
   // 3. Answer the call with the unique ID
   let handleAnswerButtonClick = async () => {
     const callId = callInputValue;
@@ -201,12 +204,11 @@ export default function Home() {
       <Header />
       <div className="antialiased text-center text-gray-700 pt-[80px]  ">
         <h2 className=" font-bold text-[50px]">ONLINE TUTORING</h2>
-
-        <div className="flex items-center justify-center flex-row">
+        <div className="flex flex-col md:flex-row items-center justify-center">
           <span>
             <video
               ref={webcamVideoRef}
-              className="w-[40vw] h-[30vw] m-8 bg-gray-900"
+              className="md:w-[40vw] md:h-[30vw] w-[80vw] h-[80vw] m-8 bg-gray-900"
               autoPlay
               playsInline
             ></video>
@@ -216,29 +218,21 @@ export default function Home() {
               ref={remoteVideoRef}
               autoPlay
               playsInline
-              className="w-[40vw] h-[30vw] m-8 bg-gray-900"
+              className="md:w-[40vw] md:h-[30vw] w-[80vw] h-[80vw] m-8 bg-gray-900"
             ></video>
           </span>
         </div>
 
         <button
           onClick={handleWebcamButtonClick}
-          className="bg-[#0070f0] w-[180px] h-[40px] rounded-xl block ml-[140px]"
+          className="bg-[#0070f0] w-[180px] h-[40px] rounded-xl block mx-auto md:ml-[140px]"
           disabled={webcamButtonDisabled}
           color="primary"
         >
           <p className="text-white font-semibold"> Start Webcam</p>
         </button>
-        <button
-          onClick={() => setCallInputValue(latestCallDocId)}
-          className="bg-[#9455d3] w-[280px] h-[40px] rounded-xl mt-[5px] mb-[10px]">
-          <p className="text-white font-semibold">
-            Click to join the latest class
-          </p>
-        </button>
         <div className="flex justify-center items-center">
-          
-          <h2 className="inline-block font-semibold text-[30px] pr-[10px] ">
+          <h2 className="inline-block font-semibold text-xl py-2 md:text-[30px] pr-[10px] ">
             Ask others to Join:
           </h2>
           <button
@@ -251,19 +245,20 @@ export default function Home() {
         </div>
         <h2 className="mb-[4px] font-semibold">or</h2>
 
+
         <div className="flex gap-[20px] justify-center">
           <input
             id="callInput"
             value={callInputValue}
             onChange={handleCallInputChange}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[400px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[60%] md:w-[400px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="online-class-id"
           />
 
           <button
             onClick={handleAnswerButtonClick}
             disabled={answerButtonDisabled}
-            className="bg-[#0070f0] w-[200px] rounded-xl"
+            className="bg-[#0070f0] w-[30%] md:w-[200px] rounded-xl"
           >
             <p className="text-white font-semibold"> Join class</p>
           </button>
@@ -274,6 +269,10 @@ export default function Home() {
           disabled={hangupButtonDisabled}
           className="rounded-full pt-[20px]"
         >
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png"
+            width={50}
+          />
           <img
             src="https://cdn-icons-png.flaticon.com/128/14025/14025253.png"
             width={50}
