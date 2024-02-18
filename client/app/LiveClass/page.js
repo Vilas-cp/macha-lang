@@ -1,10 +1,10 @@
 "use client";
 import Header from "@/components/Header";
 import firebase from "firebase/compat/app";
-import { collection, addDoc } from "firebase/compat/firestore";
+
 import { useEffect, useState, useRef } from "react";
 import "firebase/compat/firestore";
-import {Input} from "@nextui-org/react";
+
 
 const servers = {
   iceServers: [
@@ -87,7 +87,7 @@ export default function Home() {
         }
       });
     };
-    webcamVideoRef.muted = true;
+    webcamVideoRef.current.muted = true;
     setCallButtonDisabled(false);
     setAnswerButtonDisabled(false);
     setWebcamButtonDisabled(true);
