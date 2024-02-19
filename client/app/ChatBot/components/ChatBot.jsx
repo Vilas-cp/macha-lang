@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TypingAnimation from "./TypingAnimation";
 import OpenAI from "openai";
 import Header from "@/components/Header";
@@ -7,15 +7,11 @@ import dynamic from "next/dynamic";
 import React from "react";
 import useSpeechToText from "react-hook-speech-to-text";
 
-const openai = new OpenAI({
-  apiKey: "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",
-  dangerouslyAllowBrowser: true,
-});
-
-export default function ChatBot() {
+export default function ChatBot({ openaikey }) {
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const openapiref = useRef(null);
   const {
     error,
     interimResult,
@@ -38,6 +34,13 @@ export default function ChatBot() {
     }, 500);
   }
 
+  useEffect(() => {
+    const openai = new OpenAI({
+      apiKey: openaikey,
+      dangerouslyAllowBrowser: true,
+    });
+    openapiref.current = openai;
+  }, []);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -52,7 +55,7 @@ export default function ChatBot() {
   };
 
   const sendMessage = async (message) => {
-    const completion = await openai.chat.completions.create({
+    const completion = await openapiref.current.chat.completions.create({
       messages: [
         {
           role: "system",
@@ -133,14 +136,13 @@ export default function ChatBot() {
               )}
             </div>
           </div>
-          <form onSubmit={e => e.preventDefault()} className="flex-none p-6">
+          <form onSubmit={(e) => e.preventDefault()} className="flex-none p-6">
             <div className="flex flex-row rounded-lg border border-gray-700 bg-gray-800">
               <input
                 type="text"
                 className="flex-grow px-4 mr-10 py-2 bg-transparent text-white focus:outline-none"
                 placeholder="Type your message..."
                 value={inputValue}
-                
                 onChange={(e) => setInputValue(e.target.value)}
               />
               <button
