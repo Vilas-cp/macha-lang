@@ -40,15 +40,31 @@ const Header = () => {
                     {" "}
                     Code Editor
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/Aboutus")}>
+                  <MenuItem
+                    paddingY={5}
+                    onClick={() => router.push("/Aboutus")}
+                  >
                     {" "}
                     About us
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/LiveClass")}>
+                  <MenuItem
+                    paddingY={5}
+                    onClick={() => router.push("/LiveClass")}
+                  >
                     {" "}
                     Live Class
                   </MenuItem>
-                  <MenuItem paddingY={5} onClick={() => router.push("/AdvancePrograms")}>
+                  <MenuItem
+                    paddingY={5}
+                    onClick={() => router.push("/AdvancePrograms")}
+                  >
+                    {" "}
+                    AdvancePrgrams
+                  </MenuItem>
+                  <MenuItem
+                    paddingY={5}
+                    onClick={() => router.push("/ChatBot")}
+                  >
                     {" "}
                     AdvancePrgrams
                   </MenuItem>
@@ -85,6 +101,12 @@ const Header = () => {
               className="cursor-pointer hidden lg:block"
             >
               AdvancePrograms
+            </div>
+            <div
+              onClick={() => router.push("/ChatBot")}
+              className="cursor-pointer hidden lg:block"
+            >
+              ChatBot
             </div>
             <div
               onClick={() => router.push("/LiveClass")}
