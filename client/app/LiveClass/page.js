@@ -63,10 +63,15 @@ export default function Home() {
     const unsubscribe = firestore.current
       .collection("calls")
       .onSnapshot((snapshot) => {
+        // const webFirbase = snapshot.docs;
+        // const webIdFire = webFirbase[webFirbase.length - 1].id;
+        // console.log(webIdFire);
+        // console.log(webFirbase);
         snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
+
+            console.log(change);
             setLatestCallDocId(change.doc.id);
-          }
+        
         });
       });
 
