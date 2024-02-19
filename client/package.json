@@ -23,10 +23,12 @@
     "framer-motion": "^11.0.5",
     "monaco-editor": "^0.46.0",
     "next": "14.1.0",
+    "openai": "^4.28.0",
     "react": "^18",
     "react-canvas-confetti": "^2.0.5",
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18",
+    "react-hook-speech-to-text": "^0.8.0",
     "react-type-animation": "^3.2.0",
     "swiper": "^11.0.6"
   },
