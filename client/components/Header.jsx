@@ -66,7 +66,7 @@ const Header = () => {
                     onClick={() => router.push("/ChatBot")}
                   >
                     {" "}
-                    AdvancePrgrams
+                    ChatBot
                   </MenuItem>
                 </MenuList>
               </Menu>
