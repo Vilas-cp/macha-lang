@@ -17,6 +17,7 @@ const servers = {
 export default function Home() {
   let [localStream, setLocalStream] = useState(null);
   let [remoteStream, setRemoteStream] = useState(null);
+  const [latestCallDocId, setLatestCallDocId] = useState("");
   let [pc, setPC] = useState(null);
 
   const webcamVideoRef = useRef(null);
@@ -72,8 +73,6 @@ export default function Home() {
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, [firestore.current]);
-
-  const [latestCallDocId, setLatestCallDocId] = useState("");
 
   // 1. Setup media sources
 
