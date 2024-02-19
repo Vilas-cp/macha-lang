@@ -99,7 +99,7 @@ export default function ChatBot() {
       <Header />
       <div className="container mx-auto max-w-full">
         <div className="flex flex-col h-screen bg-gray-900 relative">
-          <h1 className="bg-gradient-to-r from-orange-400 to-orange-700 text-transparent bg-clip-text text-center py-3 pt-20 font-bold text-6xl">
+          <h1 className="bg-gradient-to-r from-orange-400 to-orange-700 text-transparent bg-clip-text text-center pt-28 md:py-3 md:pt-20 font-bold text-6xl">
             {"BGSCET Bot"}
           </h1>
           {/* <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="" className="h-20 inline absolute top-4 right-4 z-50 rounded-full " /> */}
