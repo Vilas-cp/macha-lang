@@ -69,6 +69,7 @@ kelsa postorderTreeTraversal(headNode) {
 }
 
 macha.helu("This is a program that convert Array to Binary Tree: \\n");
+macha.helu("ಇದು ಅರೇ ಅನ್ನು ಬೈನರಿ ಟ್ರೀ ಆಗಿ ಪರಿವರ್ತಿಸುವ ಪ್ರೋಗ್ರಾಂ ಆಗಿದೆ: \\n");
 irlli someNum = [50,80,20,15,90,40,30,10];
 irlli n = 8;
 
@@ -77,17 +78,20 @@ allivaragu (idu i = 0; i < n; i++) {
 }
 
 macha.helu("Data has been Inserted!!\\n");
+macha.helu("ಡೇಟಾವನ್ನು ಸೇರಿಸಲಾಗಿದೆ!!\\n");
 macha.helu("InOrder Traversal: ");
+macha.helu("ಇನ್ ಆರ್ಡರ್ ಟ್ರಾವರ್ಸಲ್: ");
 macha.helu("[ ");
 inorderTreeTraversal(head);
 macha.helu(" ]\\n");
 macha.helu("PreOrder Traversal: ");
+macha.helu("ಪೂರ್ವ-ಆದೇಶ ಟ್ರಾವರ್ಸಲ್: ");
 macha.helu("[ ");
 preorderTreeTraversal(head);
 macha.helu(" ]\\n");
 macha.helu("PostOrder Traversal: ");
+macha.helu("ಪೋಸ್ಟ್ ಆರ್ಡರ್ ಟ್ರಾವರ್ಸಲ್: ");
 macha.helu("[ ");
 postorderTreeTraversal(head);
 macha.helu(" ]\\n");`,
-
-}
+};
